@@ -1,17 +1,81 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/button.dart';
 import 'package:my_app_flutter/components/logo.dart';
 import 'package:my_app_flutter/components/textfield.dart';
 
-class LoginPage extends StatelessWidget{
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState  extends State<LoginPage>{
+
   //text editing controller
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  //metodo per registrarsi
-  void singUserIn() {}
+  //metodo per loggarsi
+  void loginUser() async{
+    //cerchio di caricamento
+    showDialog(context: context, builder: (context){
+      return Center(child: CircularProgressIndicator(),
+      );
+    },
+    );
+    
+    //cerca di entrare
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      //pop the laging circle
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e){
+      //pop the laging circle
+      Navigator.pop(context);
+      //email sbagliata
+      if (e.code == 'user-not.found'){
+        //mostra il messaggio all'utente
+        wrongEmailMessage();
+      }
+
+      //password sbagliata
+      else if (e.code == 'wrong-password'){
+       //mostra il messaggio di errore all'utente
+        wrongPasswordMessage();
+      }
+    }
+  }
+
+  //messaggio di email errata
+  void wrongEmailMessage(){
+    showDialog(
+        context: context,
+        builder: (context){
+         return const AlertDialog(
+            title: Text('Email errata'),
+          );
+        },
+        );
+  }
+
+  //messaggio di errore per la password errata
+  void wrongPasswordMessage(){
+    showDialog(
+      context: context,
+      builder: (context){
+        return const AlertDialog(
+          title: Text('Password errata'),
+        );
+      },
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +97,20 @@ class LoginPage extends StatelessWidget{
 
                 const SizedBox(height: 50),
                 
-                //Bentornato
-                Text('Bentornato!',
-                  style: TextStyle(
-                      color: Colors.grey[50],
-                      fontSize: 16,
-                  ),
-                ),
+                // //Bentornato
+                // Text('Bentornato!',
+                //   style: TextStyle(
+                //       color: Colors.grey[50],
+                //       fontSize: 16,
+                //   ),
+                // ),
 
                 const SizedBox(height: 25),
 
-                //username textfield
+                //email textfield
                 MyTextField(
-                  controller: usernameController,
-                  hintText: 'Username',
+                  controller: emailController,
+                  hintText: 'Email',
                   obscureText: false,
                 ),
 
@@ -78,7 +142,7 @@ class LoginPage extends StatelessWidget{
 
                 //Login
                 MyButton(
-                  onTap: singUserIn,
+                  onTap: loginUser,
                 ),
 
                 const SizedBox(height: 25),
