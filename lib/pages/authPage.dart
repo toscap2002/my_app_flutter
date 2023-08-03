@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app_flutter/pages/loginPage.dart';
 import 'package:my_app_flutter/pages/homePage.dart';
 
+import 'loginOregistrati.dart';
+
 class AuthPage extends StatelessWidget{
   const AuthPage({super.key});
 
@@ -18,7 +20,7 @@ class AuthPage extends StatelessWidget{
           }
           //l'utente NON è loggato
           else {
-            return LoginPage();
+            return LoginOrRegisterPage();
           }
 
         },
