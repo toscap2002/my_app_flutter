@@ -137,7 +137,7 @@ class _LoginPageState  extends State<LoginPage>{
 
                   //non sei ancora registrato? registrati ora
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
                           'Non sei ancora registrato?',
