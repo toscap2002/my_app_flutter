@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/button.dart';
 import 'package:my_app_flutter/components/logo.dart';
 import 'package:my_app_flutter/components/textfield.dart';
+import 'package:my_app_flutter/pages/forgotPassword.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -76,10 +77,6 @@ class _LoginPageState  extends State<LoginPage>{
                 const SizedBox(height: 50),
                   //logo
                   Logo(),
-                  // const Icon(
-                  //   Icons.lock,
-                  //   size : 100,
-                  // ),
 
 
                   const SizedBox(height: 25),
@@ -116,12 +113,20 @@ class _LoginPageState  extends State<LoginPage>{
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text('Password dimenticata?',
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return ForgotPasswordPage();
+                                    }));
+                              },
+                              child: Text('Password dimenticata?',
                               style: TextStyle(color: Colors.purple),
-                            )
-                          ]
+                            ),
+                            ),
+                          ],
                       )
                   ),
 
@@ -137,7 +142,7 @@ class _LoginPageState  extends State<LoginPage>{
 
                   //non sei ancora registrato? registrati ora
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Non sei ancora registrato?',
