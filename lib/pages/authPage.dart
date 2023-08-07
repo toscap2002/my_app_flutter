@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app_flutter/pages/introPage.dart';
 import 'package:my_app_flutter/pages/loginPage.dart';
 import 'package:my_app_flutter/pages/homePage.dart';
 
@@ -16,7 +17,7 @@ class AuthPage extends StatelessWidget{
         builder: (context, snapshot){
           //l'utente è loggato
           if (snapshot.hasData){
-            return HomePage();
+            return IntroPage();
           }
           //l'utente NON è loggato
           else {
