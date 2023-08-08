@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/textfield.dart';
 
@@ -10,62 +11,69 @@ class SearchPage extends StatefulWidget {
   }
 
 class _SearchPageState extends State<SearchPage> {
+   late Map<String, dynamic> userMap;
+   bool isLoading = false;
 
-  final searchController = TextEditingController();
+  // void updateList(String value){
+  //   //questa è la funzione che filtrerà la nostra lista
+  // }
 
-  void updateList(String value){
-    //questa è la funzione che filtrerà la nostra lista
+  TextEditingController searchController = TextEditingController();
+
+  void onSearch() async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    setState(() {
+      isLoading = true;
+    });
+
+
+    await _firestore
+        .collection('users')
+        .where("email", isEqualTo: searchController.text)
+        .get()
+        .then((value) => {
+          setState(() {
+            userMap = value.docs[0].data();
+            isLoading = false;
+          },
+          ),
+      print(userMap),
+          },
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade800,
       appBar: AppBar(
         backgroundColor: Colors.amber,
+        actions: [
+          IconButton(
+              onPressed: onSearch,
+              icon: Icon(Icons.search),
+            alignment: Alignment.centerRight,
+          ),
+          IconButton(
+            alignment: Alignment.centerLeft,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back),
+
+          ),
+        ],
+        //backgroundColor: Colors.pinkAccent,
+        title: MyTextField(
+          controller: searchController,
+          hintText: 'Cerca gli amici',
+          obscureText: false,
+        ),
       ),
-      backgroundColor: Colors.grey.shade800,
-       body: Padding(
-         padding: EdgeInsets.all(16),
-         child: Column(
-           mainAxisAlignment: MainAxisAlignment.start,
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: [
-             Text(
-               'Cerca un altro giocatore',
-               style: TextStyle(
-                   color: Colors.black45,
-                   fontSize: 22,
-                 fontWeight: FontWeight.bold,
-               ),
-             ),
-           SizedBox(
-             height: 20,
-           ),
-             TextField(
-               style: TextStyle(color: Colors.black45),
-               decoration: InputDecoration(
-                 filled: true,
-                 fillColor: Colors.grey,
-                   enabledBorder: OutlineInputBorder(
-                   borderSide: BorderSide(width: 5, color: Colors.amberAccent.shade400),
-                   borderRadius: BorderRadius.circular(50.0),
-                 ),
-                 focusedBorder: OutlineInputBorder(
-                   borderSide: BorderSide(width: 5, color: Colors.amber.shade300),
-                   borderRadius: BorderRadius.circular(50.0),
-                 ),
-                 hintText: 'Cerca...',
-                 prefixIcon: Icon(Icons.search),
-                 prefixIconColor: Colors.amber,
-               ),
-             ),
-             SizedBox(height:  20,
-             ),
-             Expanded(child: ListView(),
-             ),
-           ],
-         ),
-       ),
-    );
+      );
+
+
   }
 }

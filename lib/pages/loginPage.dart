@@ -27,14 +27,14 @@ class _LoginPageState  extends State<LoginPage>{
       );
     },
     );
-    
+
     //cerca di entrare
     try{
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
-      //pop the laging circle
+     //pop the laging circle
       Navigator.pop(context);
     } on FirebaseAuthException catch (e){
       //pop the laging circle

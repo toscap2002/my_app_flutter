@@ -11,7 +11,7 @@ class LoginOrRegisterPage extends StatefulWidget {
 
 class _LoginOrRegisterPageState extends State<LoginOrRegisterPage> {
 
-  //,pstra inizialmente la pagina di login
+  //apre inizialmente la pagina di login
   bool showLoginPage = true;
 
   //toggle tra la pagina di login e di registrazione

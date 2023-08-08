@@ -18,11 +18,11 @@ class MyTextField extends StatelessWidget{
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: TextField(
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.black87),
         controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
-          hintStyle: TextStyle(color: Colors.white),
+          hintStyle: TextStyle(color: Colors.black87),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 5, color: Colors.orange),
             borderRadius: BorderRadius.circular(50.0),
@@ -31,7 +31,7 @@ class MyTextField extends StatelessWidget{
             borderSide: BorderSide(width: 5, color: Colors.amber.shade400),
             borderRadius: BorderRadius.circular(50.0),
           ),
-          fillColor: Colors.grey[800],
+          fillColor: Colors.grey,
           filled: true,
           hintText: hintText,
         ),
