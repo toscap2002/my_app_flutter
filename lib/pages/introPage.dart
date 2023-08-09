@@ -31,7 +31,7 @@ class _IntroPageState extends State<IntroPage>{
     HomePage(),
 
     //pagina per ricercare gli atlri utenti
-    const SearchPage(),
+    SearchPage(),
 
     //pagina per visualizzare la top 50 players
     const TopPage(),
@@ -40,12 +40,12 @@ class _IntroPageState extends State<IntroPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade800,
+      backgroundColor: Colors.grey.shade600,
       body: _pages[_selectIndex],
       bottomNavigationBar: CurvedNavigationBar(
         index: _selectIndex,
         onTap: navigationBottomBar,
-        backgroundColor: Colors.grey.shade800,
+        backgroundColor: Colors.grey.shade600,
         color: Colors.pinkAccent,
         animationDuration: Duration(milliseconds: 300),
         items: [
