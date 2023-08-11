@@ -23,16 +23,15 @@ class _SearchPageState extends State<SearchPage> {
       isLoading = true;
     });
 
-
     await _firestore
-        .collection('users')
+        .collection('user')
         .where("email", isEqualTo: _search.text)
         .get()
         .then((value) {
       if (value.docs.isNotEmpty) {
         setState(() {
           userMap = value.docs[0].data();
-          isLoading = false;
+          isLoading = true;
         });
       } else {
         setState(() {
@@ -104,15 +103,17 @@ class _SearchPageState extends State<SearchPage> {
             ),
             userMap != null
                 ? ListTile(
-              onTap: onUserTapped,
+              //onTap: onUserTapped,
              // leading: Icon(Icons.account_box),
               title: Text(userMap!['email']),
               subtitle: Text(userMap!['email']),
              // trailing: Icon(Icons.add),
             )
-              : ListTile(
-          title: Text("Utente non trovato")
-            ),
+
+          //     : ListTile(
+          // title: Text("Utente non trovato")
+            //),
+            :Container(),
           ],
         ),
       ),

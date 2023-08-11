@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/button.dart';
 import 'package:my_app_flutter/components/logo.dart';
 import 'package:my_app_flutter/components/textfield.dart';
+import 'package:my_app_flutter/pages/authService.dart';
 import 'package:my_app_flutter/pages/forgotPassword.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -21,6 +23,8 @@ class _LoginPageState  extends State<LoginPage>{
 
   //metodo per loggarsi
   void loginUser() async{
+    //prende l'autenticazione
+    final authService = Provider.of<AuthService>(context, listen: false);
     //cerchio di caricamento
     showDialog(context: context, builder: (context){
       return Center(child: CircularProgressIndicator(),
@@ -30,36 +34,39 @@ class _LoginPageState  extends State<LoginPage>{
 
     //cerca di entrare
     try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+      await authService.signInWithEmailandPassword(
+          emailController.text,
+          passwordController.text,
       );
+
      //pop the laging circle
       Navigator.pop(context);
-    } on FirebaseAuthException catch (e){
+    } catch (e){
       //pop the laging circle
       Navigator.pop(context);
-      //mostra il messagiio di errore
-      showErrorMessage(e.code);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+      ),
+      );
     }
   }
 
-  //messaggio di errore
-  void showErrorMessage(String message){
-    showDialog(
-        context: context,
-        builder: (context){
-         return AlertDialog(
-           backgroundColor: Colors.deepPurpleAccent,
-            title: Center(
-              child: Text(message,
-                style: TextStyle(color: Colors.white),),
-            ),
-            );
-
-        },
-        );
-  }
+  // //messaggio di errore
+  // void showErrorMessage(String message){
+  //   showDialog(
+  //       context: context,
+  //       builder: (context){
+  //        return AlertDialog(
+  //          backgroundColor: Colors.deepPurpleAccent,
+  //           title: Center(
+  //             child: Text(message,
+  //               style: TextStyle(color: Colors.white),),
+  //           ),
+  //           );
+  //
+  //       },
+  //       );
+  // }
 
 
 

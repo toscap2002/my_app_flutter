@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/button.dart';
 import 'package:my_app_flutter/components/logo.dart';
 import 'package:my_app_flutter/components/textfield.dart';
+import 'package:my_app_flutter/pages/authService.dart';
+import 'package:provider/provider.dart';
+
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -12,63 +15,47 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState  extends State<RegisterPage>{
-
+class _RegisterPageState  extends State<RegisterPage> {
   //text editing controller
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
   //metodo per registrarsi
-  void signUserUp() async{
+  void signUserUp() async {
     //cerchio di caricamento
-    showDialog(context: context, builder: (context){
+    showDialog(context: context, builder: (context) {
       return Center(child: CircularProgressIndicator(),
       );
     },
     );
-
-    //l'utente si registra
-    try{
-      //controllare se la password è confermata
-      if(passwordController.text == confirmPasswordController.text){
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
-      } else {
-        //mostra un messaggio di errore, le password non sono uguali
-        showErrorMessage("Password diversa!");
-      }
+    //controllare se la password è confermata
+    if (passwordController.text != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Password sbagliata"),
+        ),
+      );
+      return;
+    }
+    //prendiamo l'autorizzazione da auth service
+    final authService = Provider.of<AuthService>(context, listen: false);
+    try {
+      await authService.signUpWithEmailandPassword(
+        emailController.text,
+        passwordController.text,
+      );
       //pop the laging circle
       Navigator.pop(context);
-    } on FirebaseAuthException catch (e){
+    } catch (e) {
       //pop the laging circle
       Navigator.pop(context);
       //mostra il messagiio di errore
-      showErrorMessage(e.code);
-    }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+      ),
+      );
+    };
   }
-
-  //messaggio di errore
-  void showErrorMessage(String message){
-    showDialog(
-      context: context,
-      builder: (context){
-        return AlertDialog(
-          backgroundColor: Colors.deepPurpleAccent,
-          title: Center(
-            child: Text(message,
-              style: TextStyle(color: Colors.white),),
-          ),
-        );
-
-      },
-    );
-  }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +81,8 @@ class _RegisterPageState  extends State<RegisterPage>{
                         //crea un account
                         Text('Crea un account!',
                           style: TextStyle(
-                              color: Colors.grey[50],
-                              fontSize: 16,
+                            color: Colors.grey[50],
+                            fontSize: 16,
                           ),
                         ),
 
