@@ -5,6 +5,9 @@ import 'package:my_app_flutter/pages/chatPage.dart';
 import '../components/textfield.dart';
 import 'homePage.dart';
 import 'introPage.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart'; // Importa il pacchetto
+
 
 class SearchPage extends StatefulWidget {
   @override
@@ -16,54 +19,20 @@ class _SearchPageState extends State<SearchPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
 
+  List<UserData> _filteredUserList = [];
+  List<UserData> _fullUserList = [];
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade600,
-      appBar: AppBar(
-        backgroundColor: Colors.pinkAccent,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.search),
-            alignment: Alignment.centerRight,
-          ),
-        ],
-        //backgroundColor: Colors.pinkAccent,
-        title: MyTextField(
-          controller: _searchController,
-          hintText: 'Cerca gli utenti',
-          obscureText: false,
-        ),
-      ),
-      body: FutureBuilder(
-        future: _getUserList(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Errore: ${snapshot.error}');
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Text('Nessun utente trovato.');
-          } else {
-            List<UserData> userList = snapshot.data as List<UserData>;
-            return ListView.builder(
-              itemCount: userList.length,
-              itemBuilder: (context, index) {
-                return _buildUserListItem(userList[index]);
-              },
-            );
-          }
-        },
-      ),
-    );
+  void initState() {
+    super.initState();
+    _loadUserList();
   }
 
-  Future<List<UserData>> _getUserList() async {
+  void _loadUserList() async {
     DatabaseEvent event = await _database.child('user').once();
 
     if (!event.snapshot.exists || event.snapshot.value == null) {
-      return [];
+      return;
     }
 
     dynamic snapshotValue = event.snapshot.value;
@@ -83,14 +52,58 @@ class _SearchPageState extends State<SearchPage> {
         }
       });
 
-      return userList;
-    } else {
-      return [];
+      setState(() {
+        _fullUserList = userList;
+        _filteredUserList = userList;
+      });
     }
   }
 
+  void _filterUsers(String query) {
+    setState(() {
+      _filteredUserList = _fullUserList.where((user) {
+        return user.name.toLowerCase().contains(query.toLowerCase());
+      }).toList();
 
+      if (_filteredUserList.isEmpty) {
+        Fluttertoast.showToast(
+          msg: "Nessun utente trovato",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+      }
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey.shade600,
+      appBar: AppBar(
+        backgroundColor: Colors.pinkAccent,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search),
+            alignment: Alignment.centerRight,
+          ),
+        ],
+        title: TextField( // Utilizza il widget TextField nativo
+          controller: _searchController,
+          decoration: InputDecoration(
+            hintText: 'Cerca gli utenti',
+          ),
+          onChanged: _filterUsers, // Aggiunto onChanged
+        ),
+      ),
+      body: ListView.builder(
+        itemCount: _filteredUserList.length,
+        itemBuilder: (context, index) {
+          return _buildUserListItem(_filteredUserList[index]);
+        },
+      ),
+    );
+  }
 
   Widget _buildUserListItem(UserData userData) {
     return ListTile(
@@ -100,7 +113,7 @@ class _SearchPageState extends State<SearchPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SearchPage(), // Sostituisci con il nome della tua homepage
+            builder: (context) => SearchPage(), // Tanto per
           ),
         );
       },
@@ -119,3 +132,4 @@ class UserData {
     required this.email,
   });
 }
+

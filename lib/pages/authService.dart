@@ -23,10 +23,10 @@ class AuthService extends ChangeNotifier{
       );
 
       //aggiungere un documento per l'utente nella collezione 'user' se non esiste già
-      _fireStore.collection('user').doc(userCredential.user!.uid).set({
-        'uid' : userCredential.user!.uid,
-        'email' : email,
-      }, SetOptions(merge: true));
+      // _fireStore.collection('user').doc(userCredential.user!.uid).set({
+      //   'uid' : userCredential.user!.uid,
+      //   'email' : email,
+      // }, SetOptions(merge: true));
 
 
 
@@ -58,11 +58,11 @@ class AuthService extends ChangeNotifier{
 
       //dopo aver creato un utente,
       //creiamo un documento per l'utente nella collezione degli utenti
-      _fireStore.collection('user').doc(userCredential.user!.uid).set({
-        'uid' : userCredential.user!.uid,
-        'email' : email,
-        'name' : name,
-      });
+      // _fireStore.collection('user').doc(userCredential.user!.uid).set({
+      //   'uid' : userCredential.user!.uid,
+      //   'email' : email,
+      //   'name' : name,
+      // });
 
       return userCredential;
     } on FirebaseAuthException catch (e){
