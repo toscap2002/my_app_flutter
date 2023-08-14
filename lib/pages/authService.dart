@@ -24,8 +24,6 @@ class AuthService extends ChangeNotifier{
         'email' : email,
       }, SetOptions(merge: true));
 
-
-
       return userCredential;
     } on FirebaseException catch (e){
       throw Exception(e.code);
@@ -45,7 +43,8 @@ class AuthService extends ChangeNotifier{
       //creiamo un documento per l'utente nella collezione degli utenti
       _fireStore.collection('user').doc(userCredential.user!.uid).set({
         'uid' : userCredential.user!.uid,
-        'email' : email,
+        'email' : userCredential.user!.email,
+
       });
 
       return userCredential;

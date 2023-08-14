@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ final user = FirebaseAuth.instance.currentUser!;
     final authService = Provider.of<AuthService>(context, listen: false);
     authService.logoutUser();
   }
+
 
   @override
   Widget build(BuildContext context) {

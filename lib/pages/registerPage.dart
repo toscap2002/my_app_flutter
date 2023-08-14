@@ -17,6 +17,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState  extends State<RegisterPage> {
   //text editing controller
+  final userNameController = TextField();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
@@ -87,6 +88,14 @@ class _RegisterPageState  extends State<RegisterPage> {
                         ),
 
                         const SizedBox(height: 25),
+
+                        MyTextField(
+                          controller: userNameController,
+                          hintText: 'Username',
+                          obscureText: false,
+                        ),
+
+                        const SizedBox(height: 10),
 
                         //email textfield
                         MyTextField(
