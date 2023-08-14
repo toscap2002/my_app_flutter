@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+
 
 class AuthService extends ChangeNotifier{
   //istanza di autenticazione
@@ -8,6 +10,9 @@ class AuthService extends ChangeNotifier{
 
   //istanza di firestore
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+
+  //istanza di realtime database
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
 
   //accedere
   Future<UserCredential> signInWithEmailandPassword(String email, String password) async {
@@ -33,7 +38,7 @@ class AuthService extends ChangeNotifier{
   }
 
   //creare un nuovo utente
-  Future<UserCredential> signUpWithEmailandPassword(String email, password) async{
+  Future<UserCredential> signUpWithEmailandPassword(String email, String password, String name) async{
     try {
 
       UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
@@ -46,6 +51,7 @@ class AuthService extends ChangeNotifier{
       _fireStore.collection('user').doc(userCredential.user!.uid).set({
         'uid' : userCredential.user!.uid,
         'email' : email,
+        'name' : name,
       });
 
       return userCredential;

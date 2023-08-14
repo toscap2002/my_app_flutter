@@ -17,6 +17,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState  extends State<RegisterPage> {
   //text editing controller
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
@@ -43,6 +44,7 @@ class _RegisterPageState  extends State<RegisterPage> {
       await authService.signUpWithEmailandPassword(
         emailController.text,
         passwordController.text,
+        nameController.text,
       );
       //pop the laging circle
       Navigator.pop(context);
@@ -87,6 +89,15 @@ class _RegisterPageState  extends State<RegisterPage> {
                         ),
 
                         const SizedBox(height: 25),
+
+                        //name textfield
+                        MyTextField(
+                          controller: nameController,
+                          hintText: 'Name',
+                          obscureText: false,
+                        ),
+
+                        const SizedBox(height: 10),
 
                         //email textfield
                         MyTextField(
