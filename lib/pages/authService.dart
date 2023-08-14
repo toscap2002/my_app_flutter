@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class AuthService extends ChangeNotifier{
@@ -8,6 +9,9 @@ class AuthService extends ChangeNotifier{
 
   //istanza di firestore
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+
+  //istanza di realtime database
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
 
   //accedere
   Future<UserCredential> signInWithEmailandPassword(String email, String password) async {
