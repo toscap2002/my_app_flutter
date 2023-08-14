@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/button.dart';
 import 'package:my_app_flutter/components/logo.dart';
@@ -16,6 +17,10 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState  extends State<RegisterPage> {
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
+
   //text editing controller
   final nameController = TextEditingController();
   final emailController = TextEditingController();

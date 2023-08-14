@@ -34,12 +34,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     } on FirebaseAuthException catch (e){
       print(e);
       showDialog(
-          context: context,
-          builder: (context){
-        return AlertDialog(
-          content: Text(e.message.toString()),
-        );
-      },
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            content: Text(e.message.toString()),
+          );
+        },
       );
     }
   }
@@ -56,11 +56,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Text(
-            'Inserisci la tua email e ti invieremo il link per modificare la password',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20, color: Colors.white),
-          ),
+            child: Text(
+              'Inserisci la tua email e ti invieremo il link per modificare la password',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
           ),
 
           SizedBox(height: 25),

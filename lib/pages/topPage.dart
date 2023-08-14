@@ -13,8 +13,8 @@ class _TopPageState extends State<TopPage> {
     return Center(
       //La top 50
       //backgroundColor: Colors.grey.shade600,
-        child: Text('La Top 50 !!!!!!'),
-      );
+      child: Text('La Top 50 !!!!!!'),
+    );
 
 
   }

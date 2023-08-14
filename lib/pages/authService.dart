@@ -45,6 +45,17 @@ class AuthService extends ChangeNotifier{
           password: password,
       );
 
+      // Aggiungi i dati dell'utente nel database Realtime
+      if (userCredential.user != null) {
+        final userId = userCredential.user!.uid;
+        _database.reference().child('user').child(userId).set({
+          'uid': userCredential.user!.uid,
+          'email': email,
+          'name': name,
+
+        });
+      }
+
       //dopo aver creato un utente,
       //creiamo un documento per l'utente nella collezione degli utenti
       _fireStore.collection('user').doc(userCredential.user!.uid).set({

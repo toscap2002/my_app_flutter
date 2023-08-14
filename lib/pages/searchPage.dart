@@ -1,19 +1,20 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app_flutter/pages/chatPage.dart';
 import '../components/textfield.dart';
+import 'homePage.dart';
+import 'introPage.dart';
 
 class SearchPage extends StatefulWidget {
-
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  final DatabaseReference _database = FirebaseDatabase.instance.reference();
 
   @override
   Widget build(BuildContext context) {
@@ -23,118 +24,98 @@ class _SearchPageState extends State<SearchPage> {
         backgroundColor: Colors.pinkAccent,
         actions: [
           IconButton(
-            onPressed: (){},
+            onPressed: () {},
             icon: Icon(Icons.search),
             alignment: Alignment.centerRight,
           ),
-       ],
+        ],
         //backgroundColor: Colors.pinkAccent,
         title: MyTextField(
           controller: _searchController,
-          hintText: 'Cerca gli amici',
+          hintText: 'Cerca gli utenti',
           obscureText: false,
         ),
       ),
-      body: _buildUserList(),
-
-      );
-
-    }
-
-    //creare la lista degli utenti senza l'utente loggato
-    Widget _buildUserList() {
-      // Esegui la query diretta per verificare il numero di documenti nella raccolta "user"
-      FirebaseFirestore.instance.collection('user').get().then((querySnapshot) {
-        print("Numero di documenti: ${querySnapshot.size}");
-      });
-
-      return StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('user').snapshots(),
-          builder: (context, snapshot) {
-
-            if (snapshot.hasError) {
-              return Text('Errore: ${snapshot.error}');
-            }
-
-            if (!snapshot.hasData) {
-              return Text('Nessun dato disponibile.');
-            }
-
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            }
-
-            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return Text('Nessun utente trovato.');
-            }
-            snapshot.data!.docs.forEach((doc) {
-              print("Documento: ${doc.id}");
-              print("Dati: ${doc.data()}");
-            });
+      body: FutureBuilder(
+        future: _getUserList(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Errore: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Text('Nessun utente trovato.');
+          } else {
+            List<UserData> userList = snapshot.data as List<UserData>;
             return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
+              itemCount: userList.length,
               itemBuilder: (context, index) {
-                DocumentSnapshot document = snapshot.data!.docs[index];
-                Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-
-                return ListTile(
-                  title: Text(data['email']), // Assicurati che 'email' corrisponda alla chiave nei tuoi documenti
-                  subtitle: Text(data['uid']), // Assicurati che 'uid' corrisponda alla chiave nei tuoi documenti
-                );
+                return _buildUserListItem(userList[index]);
               },
             );
-                  print("StreamBuilder - Snapshot ConnectionState: ${snapshot.connectionState}");
-                  if (snapshot.hasError){
-                    print("StreamBuilder - Error: ${snapshot.error}");
-                    return const Text('ERRORE');
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting){
-                    print("StreamBuilder - No data found.");
-                    return const Text('loading...');
-                  }
-                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return const Text('Nessun utente trovato.');
-                  }
-                  return ListView(
-                    children: snapshot.data!.docs
-                        .map<Widget>((doc) => _buildUserListItem(doc))
-                        .toList(),
-                  );
-                }
-            );
           }
+        },
+      ),
+    );
+  }
 
+  Future<List<UserData>> _getUserList() async {
+    DatabaseEvent event = await _database.child('user').once();
 
-
-
-      //creare la lista dei singli elementi dell'utente
-      Widget _buildUserListItem(DocumentSnapshot document) {
-      Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-
-      //mostra tutti gli utenti senza quello corrente
-      if (_auth.currentUser!.uid != data['uid']){
-        return ListTile(
-          title: Text(data['email']),
-          onTap: (){
-            //passa l'uid dell'utente cliccato per la pagine della chat
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(
-              receiveUserEmail: data['email'],
-              receiverUserID: data['uid'],
-            ),
-            ),
-            );
-            },
-          );
-        }else {
-          //ritorna il contenitore vuoto
-          return Container();
-        }
-      }
-
-      // void onSearch(String query) {
-      //   final suggestion = user.where((user){
-      //    final input = query.toLowerCase();
-      //    return email.contains(input);
-      //   }).toList();
+    if (!event.snapshot.exists || event.snapshot.value == null) {
+      return [];
     }
 
+    dynamic snapshotValue = event.snapshot.value;
+
+    if (snapshotValue is Map) {
+      Map<dynamic, dynamic> usersMap = Map.from(snapshotValue);
+
+      List<UserData> userList = [];
+
+      usersMap.forEach((userId, userData) {
+        if (userData is Map && _auth.currentUser!.uid != userId) {
+          userList.add(UserData(
+            userId: userId,
+            email: userData['email'] ?? '',
+            name: userData['name'] ?? '',
+          ));
+        }
+      });
+
+      return userList;
+    } else {
+      return [];
+    }
+  }
+
+
+
+
+  Widget _buildUserListItem(UserData userData) {
+    return ListTile(
+      title: Text(userData.name),
+      subtitle: Text(userData.email),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SearchPage(), // Sostituisci con il nome della tua homepage
+          ),
+        );
+      },
+    );
+  }
+}
+
+class UserData {
+  final String userId;
+  final String name;
+  final String email;
+
+  UserData({
+    required this.userId,
+    required this.name,
+    required this.email,
+  });
+}

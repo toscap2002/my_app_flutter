@@ -6,16 +6,16 @@ import 'package:my_app_flutter/pages/authService.dart';
 
 
 class HomePage extends StatefulWidget{
-   HomePage({super.key});
+  HomePage({super.key});
 
-   @override
-   _HomePageState createState() => _HomePageState();
+  @override
+  _HomePageState createState() => _HomePageState();
 }
 
 
 class _HomePageState extends State<HomePage> {
 
-final user = FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance.currentUser!;
 
 
   //Metodo di logout
@@ -40,10 +40,10 @@ final user = FirebaseAuth.instance.currentUser!;
         ],
       ),
       body: Center(child: Text("Sei entrato come " + user.email!,
-      style: TextStyle(fontSize: 20),
+        style: TextStyle(fontSize: 20),
 
-    ),
-    ),
+      ),
+      ),
     );
 
   }

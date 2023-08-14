@@ -35,11 +35,11 @@ class _LoginPageState  extends State<LoginPage>{
     //cerca di entrare
     try{
       await authService.signInWithEmailandPassword(
-          emailController.text,
-          passwordController.text,
+        emailController.text,
+        passwordController.text,
       );
 
-     //pop the laging circle
+      //pop the laging circle
       Navigator.pop(context);
     } catch (e){
       //pop the laging circle
@@ -74,106 +74,106 @@ class _LoginPageState  extends State<LoginPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                const SizedBox(height: 50),
-                  //logo
-                  Logo(),
+        backgroundColor: Colors.grey[900],
+        body: SafeArea(
+            child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 50),
+                        //logo
+                        Logo(),
 
 
-                  const SizedBox(height: 25),
-                  
-                  // //Bentornato
-                  // Text('Bentornato!',
-                  //   style: TextStyle(
-                  //       color: Colors.grey[50],
-                  //       fontSize: 16,
-                  //   ),
-                  // ),
+                        const SizedBox(height: 25),
 
-                  const SizedBox(height: 25),
+                        // //Bentornato
+                        // Text('Bentornato!',
+                        //   style: TextStyle(
+                        //       color: Colors.grey[50],
+                        //       fontSize: 16,
+                        //   ),
+                        // ),
 
-                  //email textfield
-                  MyTextField(
-                    controller: emailController,
-                    hintText: 'Email',
-                    obscureText: false,
-                  ),
+                        const SizedBox(height: 25),
 
-                  const SizedBox(height: 10),
+                        //email textfield
+                        MyTextField(
+                          controller: emailController,
+                          hintText: 'Email',
+                          obscureText: false,
+                        ),
 
-                  //password textflied
-                  MyTextField(
-                    controller: passwordController,
-                    hintText: 'Password',
-                    obscureText: true,
-                  ),
+                        const SizedBox(height: 10),
 
-                  const SizedBox(height: 25),
+                        //password textflied
+                        MyTextField(
+                          controller: passwordController,
+                          hintText: 'Password',
+                          obscureText: true,
+                        ),
 
-                  //Password dimenticata?
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                        const SizedBox(height: 25),
+
+                        //Password dimenticata?
+                        Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return ForgotPasswordPage();
+                                        }));
+                                  },
+                                  child: Text('Password dimenticata?',
+                                    style: TextStyle(color: Colors.purple),
+                                  ),
+                                ),
+                              ],
+                            )
+                        ),
+
+                        const SizedBox(height: 25),
+
+                        //Login
+                        MyButton(
+                          text: "Login",
+                          onTap: loginUser,
+                        ),
+
+                        const SizedBox(height: 25),
+
+                        //non sei ancora registrato? registrati ora
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            GestureDetector(
-                              onTap: (){
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                      return ForgotPasswordPage();
-                                    }));
-                              },
-                              child: Text('Password dimenticata?',
+                            Text(
+                              'Non sei ancora registrato?',
                               style: TextStyle(color: Colors.purple),
                             ),
+                            const SizedBox(width: 4),
+                            GestureDetector(
+                                onTap: widget.onTap,
+                                child: const Text(
+                                  'Registrati',
+                                  style: TextStyle(
+                                    color: Colors.indigo,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
                             ),
                           ],
-                      )
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  //Login
-                  MyButton(
-                    text: "Login",
-                    onTap: loginUser,
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  //non sei ancora registrato? registrati ora
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Non sei ancora registrato?',
-                          style: TextStyle(color: Colors.purple),
-                        ),
-                        const SizedBox(width: 4),
-                        GestureDetector(
-                          onTap: widget.onTap,
-                        child: const Text(
-                          'Registrati',
-                          style: TextStyle(
-                          color: Colors.indigo,
-                            fontWeight: FontWeight.bold,
-                          ),
                         )
-                        ),
-                      ],
-                  )
 
-                  ]),
-          )
+                      ]),
+                )
 
-      )
-      )
-          );
+            )
+        )
+    );
   }
 }

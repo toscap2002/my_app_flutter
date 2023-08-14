@@ -26,7 +26,7 @@ class _IntroPageState extends State<IntroPage>{
   }
 
   //le pagine da mostrare
-   final List<Widget> _pages = [
+  final List<Widget> _pages = [
     //la pgina di home
     HomePage(),
 
