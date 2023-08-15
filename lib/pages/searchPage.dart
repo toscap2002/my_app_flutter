@@ -88,10 +88,23 @@ class _SearchPageState extends State<SearchPage> {
             alignment: Alignment.centerRight,
           ),
         ],
-        title: TextField( // Utilizza il widget TextField nativo
+        title: TextField(
+          // Utilizza il widget TextField nativo
+          style: TextStyle(color: Colors.black87),
           controller: _searchController,
           decoration: InputDecoration(
             hintText: 'Cerca gli utenti',
+            hintStyle: TextStyle(color: Colors.black87),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 5, color: Colors.orange),
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 5, color: Colors.amber.shade400),
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            fillColor: Colors.grey,
+            filled: true,
           ),
           onChanged: _filterUsers, // Aggiunto onChanged
         ),
@@ -113,7 +126,7 @@ class _SearchPageState extends State<SearchPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SearchPage(), // Tanto per
+            builder: (context) => ChatPage(userId: userData.userId, name: userData.name,), // Passa l'ID dell'utente
           ),
         );
       },

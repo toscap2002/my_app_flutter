@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.grey.shade600,
       appBar: AppBar(
         title: Text('Home'),
+        centerTitle: true,
         backgroundColor: Colors.pinkAccent,
         actions: [
           IconButton(
