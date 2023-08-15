@@ -1,23 +1,23 @@
 class Message {
   final String senderId;
-  final String text;
+  final String message;
 
   Message({
     required this.senderId,
-    required this.text,
+    required this.message,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'senderId': senderId,
-      'text': text,
+      'message': message,
     };
   }
 
   factory Message.fromMap(Map<dynamic, dynamic> map) {
     return Message(
       senderId: map['senderId'],
-      text: map['text'],
+      message: map['message'],
     );
   }
 }

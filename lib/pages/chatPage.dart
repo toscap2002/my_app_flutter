@@ -18,24 +18,24 @@ class ChatPage extends StatefulWidget {
 
 class Message {
   final String senderId;
-  final String text;
+  final String message;
 
   Message({
     required this.senderId,
-    required this.text,
+    required this.message,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'senderId': senderId,
-      'text': text,
+      'message': message,
     };
   }
 
   factory Message.fromMap(Map<dynamic, dynamic> map) {
     return Message(
       senderId: map['senderId'],
-      text: map['text'],
+      message: map['message'],
     );
   }
 }
@@ -92,7 +92,7 @@ class _ChatPageState extends State<ChatPage> {
                               color: isSentByCurrentUser ? Colors.blue : Colors.grey.shade300,
                               borderRadius: BorderRadius.circular(16),
                             ),
-                            child: Text(message.text),
+                            child: Text(message.message),
                           ),
                         ),
                       );
@@ -132,7 +132,7 @@ class _ChatPageState extends State<ChatPage> {
                     String messageText = _messageController.text;
                     if (messageText.isNotEmpty) {
                       String currentUserId = _auth.currentUser!.uid;
-                      Message newMessage = Message(senderId: currentUserId, text: messageText);
+                      Message newMessage = Message(senderId: currentUserId, message: messageText);
                       await _database.child('chats').child(_getChatId()).child('messages').push().set(newMessage.toMap());
                       _messageController.clear();
                     }
