@@ -151,7 +151,7 @@ class _ChatPageState extends State<ChatPage> {
     List<String> userIds = [currentUserId, widget.userId];
     userIds.sort(); // Ordina gli ID utente per ottenere un ID di chat univoco
     String chatId = userIds.join(); // Combina gli ID utente per ottenere l'ID della chat
-    return 'chats/$chatId'; // Restituisci il percorso completo all'ID della chat
+    return chatId; // Restituisci il percorso completo all'ID della chat
   }
 }
 
