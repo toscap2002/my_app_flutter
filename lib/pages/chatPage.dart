@@ -1,12 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:rxdart/rxdart.dart';
-import 'package:stream_transform/stream_transform.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app_flutter/pages/message.dart';
 import 'package:my_app_flutter/pages/searchPage.dart';
 
 class ChatPage extends StatefulWidget {
@@ -20,24 +17,24 @@ class ChatPage extends StatefulWidget {
 
 class Message {
   final String senderId;
-  final String message;
+  final String text;
 
   Message({
     required this.senderId,
-    required this.message,
+    required this.text,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'senderId': senderId,
-      'message': message,
+      'text': text,
     };
   }
 
   factory Message.fromMap(Map<dynamic, dynamic> map) {
     return Message(
       senderId: map['senderId'],
-      message: map['message'],
+      text: map['text'],
     );
   }
 }
@@ -47,15 +44,7 @@ class _ChatPageState extends State<ChatPage> {
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
   List<Message> _messages = [];
   TextEditingController _messageController = TextEditingController();
-  ScrollController _scrollController = ScrollController();
-  StreamController<void> _scrollToBottomStreamController = StreamController<void>();
 
-
-  @override
-  void dispose() {
-    _scrollToBottomStreamController.close();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +62,6 @@ class _ChatPageState extends State<ChatPage> {
             child: StreamBuilder(
               stream: _database.child('chats').child(_getChatId()).child('messages').onValue,
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.active) {
-                  WidgetsBinding.instance?.addPostFrameCallback((_) {
-                    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-                  });
-                }
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();
                 } else if (snapshot.hasError) {
@@ -93,8 +77,6 @@ class _ChatPageState extends State<ChatPage> {
                   });
 
                   return ListView.builder(
-                    controller: _scrollController,
-                    reverse: false, // Inverti l'ordine per far scorrere verso l'alto
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
                       final message = messages[index];
@@ -109,7 +91,7 @@ class _ChatPageState extends State<ChatPage> {
                               color: isSentByCurrentUser ? Colors.blue : Colors.grey.shade300,
                               borderRadius: BorderRadius.circular(16),
                             ),
-                            child: Text(message.message),
+                            child: Text(message.text),
                           ),
                         ),
                       );
@@ -131,15 +113,15 @@ class _ChatPageState extends State<ChatPage> {
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           width: 3,
-                          color: Colors.pinkAccent,
+                        color: Colors.pinkAccent,
                         ),
                       ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 3,
-                          color: Colors.pinkAccent.shade100,
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3,
+                              color: Colors.pinkAccent.shade100,
+                          ),
                         ),
-                      ),
                     ),
                   ),
                 ),
@@ -149,17 +131,9 @@ class _ChatPageState extends State<ChatPage> {
                     String messageText = _messageController.text;
                     if (messageText.isNotEmpty) {
                       String currentUserId = _auth.currentUser!.uid;
-                      Message newMessage = Message(senderId: currentUserId, message: messageText);
+                      Message newMessage = Message(senderId: currentUserId, text: messageText);
                       await _database.child('chats').child(_getChatId()).child('messages').push().set(newMessage.toMap());
                       _messageController.clear();
-
-                      // Dopo aver inviato un messaggio, scorri la schermata verso l'alto per visualizzare il nuovo messaggio
-                      // _scrollController.jumpTo( 0);
-                      // Scorrere automaticamente la schermata alla posizione massima per far apparire il nuovo messaggio
-                      // double maxScrollExtent = _scrollController.position.maxScrollExtent;
-                      // _scrollController.jumpTo(maxScrollExtent); // O _scrollController.animateTo(maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
-                      _scrollToBottomStreamController.add(null); // Aggiungi un valore all'evento per far scorrere verso il basso
-
                     }
                   },
                 ),
@@ -174,15 +148,9 @@ class _ChatPageState extends State<ChatPage> {
   String _getChatId() {
     String currentUserId = _auth.currentUser!.uid;
     List<String> userIds = [currentUserId, widget.userId];
-    String receiverRoom = widget.userId + currentUserId;
-    String messaggio = _messageController.text;
-    if(!messaggio.isEmpty){
-      Message newMessage = Message(senderId: currentUserId, message: messaggio);
-      _database.child('chats').child(receiverRoom).child('messages').push().set(newMessage.toMap());
-    }
-    // userIds.sort(); // Ordina gli ID utente per ottenere un ID di chat univoco
+    userIds.sort(); // Ordina gli ID utente per ottenere un ID di chat univoco
     String chatId = userIds.join(); // Combina gli ID utente per ottenere l'ID della chat
-    return chatId; // Restituisci il percorso completo all'ID della chat
+    return 'chats/$chatId'; // Restituisci il percorso completo all'ID della chat
   }
 }
 
