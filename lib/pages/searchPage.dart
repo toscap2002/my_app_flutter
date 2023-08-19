@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app_flutter/pages/chatPage.dart';
+import 'package:my_app_flutter/pages/playerStatistics.dart';
 import '../components/textfield.dart';
 import 'homePage.dart';
 import 'introPage.dart';
@@ -126,7 +127,7 @@ class _SearchPageState extends State<SearchPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ChatPage(userId: userData.userId, name: userData.name,), // Passa l'ID dell'utente
+            builder: (context) => PlayerStatistics(userID: userData.userId, namePS: userData.name), // Passa l'ID dell'utente
           ),
         );
       },

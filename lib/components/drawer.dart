@@ -36,7 +36,7 @@ class MyDrawer extends StatelessWidget {
           //logout lista
           Padding(
             padding: const EdgeInsets.only(bottom: 25.0),
-            child: MyList(icon: Icons.logout, text: 'L O G A U T', onTap: onLogout,
+            child: MyList(icon: Icons.logout, text: 'L O G O U T', onTap: onLogout,
             ),
           ),
         ],
