@@ -38,6 +38,11 @@ class _TopPageState extends State<TopPage> {
     return Scaffold(
       //La top 50
       backgroundColor: Colors.grey.shade600,
+      appBar: AppBar(
+        title: Text('Top 50 giocatori'),
+        centerTitle: true,
+        backgroundColor: Colors.pinkAccent,
+      ),
       body: FutureBuilder(
         future: getTopPlayer(),
         builder: (context, snapshot){

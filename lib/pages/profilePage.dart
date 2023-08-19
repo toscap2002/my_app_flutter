@@ -15,17 +15,37 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       //Profile Page
+      backgroundColor: Colors.grey.shade600,
       appBar: AppBar(
         title: Text('Profilo'),
         centerTitle: true,
         backgroundColor: Colors.pinkAccent,
       ),
       //backgroundColor: Colors.grey.shade600,
-      body: Center(child: Text("Sei entrato come " + user.email!,
-        style: TextStyle(fontSize: 20),
+      body: ListView(
+        children: [
+          const SizedBox(height: 50),
+
+          //profile pic
+          Icon(Icons.person, size: 72),
+          //user email
+          Text(
+            user.email!,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.black),
+          ),
+          //user detail
+          Padding(
+            padding: const EdgeInsets.only(left: 25.0),
+            child: Text(
+              'Dettagli',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          //bio
+        ],
 
       ),
-      ),
-    );
+      );
   }
 }
