@@ -49,6 +49,7 @@ class _SearchPageState extends State<SearchPage> {
             userId: userId,
             email: userData['email'] ?? '',
             name: userData['name'] ?? '',
+            tag: userData['tag'] ?? '',
           ));
         }
       });
@@ -63,7 +64,8 @@ class _SearchPageState extends State<SearchPage> {
   void _filterUsers(String query) {
     setState(() {
       _filteredUserList = _fullUserList.where((user) {
-        return user.name.toLowerCase().contains(query.toLowerCase());
+        return (user.name.toLowerCase().contains(query.toLowerCase())||
+            (user.tag.toLowerCase().contains(query.toLowerCase())));
       }).toList();
 
       if (_filteredUserList.isEmpty) {
@@ -122,7 +124,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildUserListItem(UserData userData) {
     return ListTile(
       title: Text(userData.name),
-      subtitle: Text(userData.email),
+      subtitle: Text(userData.tag),
       onTap: () {
         Navigator.push(
           context,
@@ -139,11 +141,13 @@ class UserData {
   final String userId;
   final String name;
   final String email;
+  final String tag;
 
   UserData({
     required this.userId,
     required this.name,
     required this.email,
+    required this.tag,
   });
 }
 
