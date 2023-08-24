@@ -46,6 +46,8 @@ dependencies:
   stream_transform: ^2.0.0
   provider:
   http: ^1.1.0
+  url_launcher: ^6.0.12
+  video_player: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +75,10 @@ flutter:
   assets:
 # - lib/images/
     - lib/images/coclogo.png
+    - lib/images/clashapilogin.png
+    - lib/images/imageviewapp.jpeg
+    - lib/images/taglocation.jpeg
+    - lib/video/videotutorialapiclash.mp4
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

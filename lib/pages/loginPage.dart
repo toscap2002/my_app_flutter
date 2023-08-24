@@ -5,6 +5,7 @@ import 'package:my_app_flutter/components/logo.dart';
 import 'package:my_app_flutter/components/textfield.dart';
 import 'package:my_app_flutter/pages/authService.dart';
 import 'package:my_app_flutter/pages/forgotPassword.dart';
+import 'package:my_app_flutter/pages/tutorialPage.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -167,9 +168,23 @@ class _LoginPageState  extends State<LoginPage>{
                                 )
                             ),
                           ],
-                        )
+                        ),
 
-                      ]),
+                        const SizedBox(height: 25),
+
+                        //Login
+                        MyButton(
+                          text: "Tutorial",
+                          onTap:() {
+                            // Quando il pulsante viene premuto, apri la nuova pagina
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => TutorialPage()),
+                            );
+                          },
+                        ),
+                      ],
+                  ),
                 )
 
             )
