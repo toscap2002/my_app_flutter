@@ -22,6 +22,7 @@ class _RegisterPageState  extends State<RegisterPage> {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
 
   //text editing controller
+  final tagController = TextEditingController();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -50,6 +51,7 @@ class _RegisterPageState  extends State<RegisterPage> {
         emailController.text,
         passwordController.text,
         nameController.text,
+        tagController.text,
       );
       //pop the laging circle
       Navigator.pop(context);
@@ -94,6 +96,14 @@ class _RegisterPageState  extends State<RegisterPage> {
                         ),
 
                         const SizedBox(height: 25),
+
+                        MyTextField(
+                          controller: tagController,
+                          hintText: 'Tag',
+                          obscureText: false,
+                        ),
+
+                        const SizedBox(height: 10),
 
                         MyTextField(
                           controller: nameController,
