@@ -172,18 +172,42 @@ class _LoginPageState  extends State<LoginPage>{
 
                         const SizedBox(height: 25),
 
-                        //Login
-                        MyButton(
-                          text: "Tutorial",
-                          onTap:() {
-                            // Quando il pulsante viene premuto, apri la nuova pagina
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => TutorialPage()),
-                            );
-                          },
+                        // //Tutorial
+                        // MyButton(
+                        //   text: "Tutorial",
+                        //   onTap:() {
+                        //     // Quando il pulsante viene premuto, apri la nuova pagina
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(builder: (context) => TutorialPage()),
+                        //     );
+                        //   },
+                        // ),
+                        GestureDetector(
+                            onTap: () {
+                              // Quando il pulsante viene premuto, apri la nuova pagina
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => TutorialPage()),
+                              );
+                            },
+                          child: Container(
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.symmetric(horizontal: 300),
+                              decoration: BoxDecoration(color: Colors.purple[400],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            child: const Text(
+                              'Tutorial',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            )
                         ),
-                      ],
+                        ),
+                          ],
                   ),
                 )
 
