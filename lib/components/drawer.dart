@@ -10,7 +10,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.grey.shade600,
+     // backgroundColor: Colors.grey.shade600,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -20,7 +20,7 @@ class MyDrawer extends StatelessWidget {
               child:
               Icon(
                 Icons.person,
-                color: Colors.white,
+                color: Colors.black,
                 size: 64,
               ),
             ),

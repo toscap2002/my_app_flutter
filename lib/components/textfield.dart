@@ -31,7 +31,7 @@ class MyTextField extends StatelessWidget{
             borderSide: BorderSide(width: 5, color: Colors.amber.shade400),
             borderRadius: BorderRadius.circular(50.0),
           ),
-          fillColor: Colors.grey,
+          fillColor: Colors.white38,
           filled: true,
           hintText: hintText,
         ),

@@ -18,7 +18,7 @@ class _PlayerStatisticsState extends State<PlayerStatistics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade600,
+     // backgroundColor: Colors.grey.shade600,
       appBar: AppBar(
         title: Text('Statistiche di ${widget.namePS}'),
         centerTitle: true,

@@ -40,12 +40,12 @@ class _IntroPageState extends State<IntroPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade600,
+      //backgroundColor: Colors.grey.shade600,
       body: _pages[_selectIndex],
       bottomNavigationBar: CurvedNavigationBar(
         index: _selectIndex,
         onTap: navigationBottomBar,
-        backgroundColor: Colors.grey.shade600,
+        backgroundColor: Colors.white,
         color: Colors.pinkAccent,
         animationDuration: Duration(milliseconds: 300),
         items: [

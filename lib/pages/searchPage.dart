@@ -81,7 +81,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade600,
+      //backgroundColor: Colors.grey.shade600,
       appBar: AppBar(
         backgroundColor: Colors.pinkAccent,
         actions: [
@@ -106,7 +106,7 @@ class _SearchPageState extends State<SearchPage> {
               borderSide: BorderSide(width: 5, color: Colors.amber.shade400),
               borderRadius: BorderRadius.circular(50.0),
             ),
-            fillColor: Colors.grey,
+            fillColor: Colors.white38,
             filled: true,
           ),
           onChanged: _filterUsers, // Aggiunto onChanged

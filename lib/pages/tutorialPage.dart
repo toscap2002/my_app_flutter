@@ -64,6 +64,7 @@ class _TutorialPageState extends State<TutorialPage> {
     return Scaffold(
 
       appBar: AppBar(
+        backgroundColor: Colors.pinkAccent,
         title: Text('Tutorial App'),
       ),
       body: SingleChildScrollView(
