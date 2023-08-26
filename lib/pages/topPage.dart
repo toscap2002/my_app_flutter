@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:my_app_flutter/model/village.dart';
+import 'package:my_app_flutter/model/player.dart';
+
 
 class TopPage extends StatefulWidget {
   TopPage({super.key});
@@ -12,22 +13,37 @@ class TopPage extends StatefulWidget {
   State<TopPage> createState() => _TopPageState();
 }
 
-List<Village> villages = [];
+List<Player> player = [];
 
 
 Future getTopPlayer() async{
-  var response = await http.get(Uri.https('api'));
-  //print(response.body);
+  var response = await http.get(Uri.https('https://api.clashofclans.com/v1/players/%232rypjyy'));
+  print(response.body);
   var jsonData = jsonDecode(response.body);
 
-  for(var eachPlayer in jsonData['nome array json']){
-    final village = Village(
-        jsonObgect1: eachPlayer['jsonObgect1'],
-        jsonObgect2: eachPlayer['jsonObgect2'],
+  for(var eachPlayer in jsonData['clan']){
+    final player = Player(
+      bestTrophies: eachPlayer['bestTrophies'],
+      bestVersusTrophies: eachPlayer['bestVersusTrophies'],
+        builderHallLevel: jsonData['builderHallLevel'],
+        clan: jsonData['clan'],
+        donations: jsonData['donations'],
+        donationsReceived: jsonData['donationsReceived'],
+        expLevel: jsonData['expLevel'],
+        labels: [],
+        league: jsonData[''], // Assicurati di fornire la chiave corretta
+        name: '', // Assicurati di fornire la chiave corretta
+        role: '', // Assicurati di fornire la chiave corretta
+        townHallLevel: jsonData['townHallLevel'],
+        trophies: jsonData['trophies'],
+        versusTrophies: jsonData['versusTrophies'],
+        warStars: jsonData['warStars'],
+        tag: '',
+
     );
-    villages.add(village);
+
   }
-  print(villages.length);
+  print(player.length);
 }
 
 
@@ -49,11 +65,11 @@ class _TopPageState extends State<TopPage> {
           //ha caricato? allora mostra i dati
           if(snapshot.connectionState == ConnectionState.done){
             return ListView.builder(
-                itemCount: villages.length,
+                itemCount: player.length,
                 itemBuilder: (context, index){
                   return ListTile(
-                    title: Text(villages[index].jsonObgect1),
-                    subtitle: Text(villages[index].jsonObgect2),
+                    title: Text(player[index].tag as String),
+                    subtitle: Text(player[index].townHallLevel as String),
                   );
                 },
             );
