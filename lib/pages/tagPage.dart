@@ -51,7 +51,7 @@ class _TagPageState extends State<TagPage> {
 
                 Center(
                   child: Text(
-                    'Inserisci il tuo Tag che troverai nel tuo profilo di Clash of Clans',
+                    'Inserisci il tuo Tag, lo troverai nel tuo profilo di Clash of Clans',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 18),
                   ),
