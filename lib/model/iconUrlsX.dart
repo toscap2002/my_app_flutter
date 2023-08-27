@@ -18,7 +18,7 @@ class IconUrlsX {
   }
 
   factory IconUrlsX.fromJson(Map<String, dynamic> json) {
-    //print('Creating IconUrlsx from JSON: $json');
+    print('Creating IconUrlsx from JSON: $json');
     return IconUrlsX(
       tiny: json['tiny'] ?? '',
       medium: json['medium'] ?? '',
