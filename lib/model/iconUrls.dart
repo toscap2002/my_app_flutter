@@ -9,7 +9,15 @@ class IconUrls {
     required this.small,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'medium': medium,
+      'small': small,
+    };
+  }
+
   factory IconUrls.fromJson(Map<String, dynamic> json) {
+    //print('Creating IconUrls from JSON: $json');
     return IconUrls(
       medium: json['medium'] ?? '',
       small: json['small'] ?? '',

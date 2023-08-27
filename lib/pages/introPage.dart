@@ -34,7 +34,7 @@ class _IntroPageState extends State<IntroPage>{
     SearchPage(),
 
     //pagina per visualizzare la top 50 players
-    TopPage(),
+    //TopPage(),
   ];
 
   @override

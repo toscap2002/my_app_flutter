@@ -1,4 +1,5 @@
-import 'badgeUrld.dart';
+import 'badgeUrls.dart';
+
 
 class Clan {
   final BadgeUrls badgeUrls;
@@ -13,14 +14,21 @@ class Clan {
     required this.tag,
   });
 
-  factory Clan.fromJson(Map<String, dynamic> json) {
-    return Clan(
-      tag: json['tag'],
-      name: json['name'],
-      clanLevel: json['clanLevel'],
-      badgeUrls: BadgeUrls.fromJson(json['bagdesUrls']),
-      // ... altre proprietà
-    );
+  Map<String, dynamic> toJson() {
+    return {
+      'badgeUrls': badgeUrls != null ? badgeUrls.toJson() : null,
+      'clanLevel': clanLevel,
+      'name': name,
+      'tag': tag,
+    };
   }
 
+  factory Clan.fromJson(Map<String, dynamic> json) {
+    return Clan(
+      tag: json['tag'] ?? '',
+      name: json['name'] ?? '',
+      clanLevel: json['clanLevel'] ?? 0,
+      badgeUrls: BadgeUrls.fromJson(json['badgeUrls'] ?? {}),
+    );
+  }
 }

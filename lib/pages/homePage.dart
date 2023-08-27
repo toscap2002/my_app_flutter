@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/drawer.dart';
 import 'package:my_app_flutter/model/player.dart';
 import 'package:my_app_flutter/pages/about.dart';
-import 'package:my_app_flutter/pages/apiService.dart';
 import 'package:my_app_flutter/pages/profilePage.dart';
 import 'package:my_app_flutter/pages/topPage.dart';
 import 'package:my_app_flutter/util/constats.dart';
@@ -13,7 +12,6 @@ import 'package:my_app_flutter/pages/authService.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
-import 'homeAdapter.dart';
 
 class HomePage extends StatefulWidget {
   final String playerTag;
@@ -24,14 +22,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late Future<Map<String, dynamic>> _jsonData;
+  //late Future<Map<String, dynamic>> _jsonData;
 
   late Future<Player> _playerStatistics;
 
-  Future<Map<String, dynamic>> fetchPlayerStatistics(String playerTag) async {
+  Future<Player> fetchPlayerStatistics(String playerTag) async {
     try {
+      print('Fetching player statistics...');
       const String API_KEY =
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImMxNDUyYmZiLTNiYWMtNGE4MS05ODhkLTkyODUxMmRmZmNiMCIsImlhdCI6MTY5Mjk3OTQ4Nywic3ViIjoiZGV2ZWxvcGVyLzI1MjUyOTRkLWRjNWQtYTcwOS0zYTVhLTg4Njc3YWQ5M2E1ZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjM3LjE2MC4yMzAuMjM2Il0sInR5cGUiOiJjbGllbnQifV19.ULAYZ2F_6JcYMG5mVO1i0-UNqTFqSWoK5A0p42XeCAc5nrfYpx_E35JQCrn1ie7batNU1yc1b4Q2bfLvNSLnqg';
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjVhNjBkMjMyLTM4NjctNDdjZS04ZThlLTJlN2ZhZjAxMTVjMCIsImlhdCI6MTY5MzExNDgxNiwic3ViIjoiZGV2ZWxvcGVyLzI1MjUyOTRkLWRjNWQtYTcwOS0zYTVhLTg4Njc3YWQ5M2E1ZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjM3LjE2My45Ni4zOCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.IzPWIS66pOzYNd2DDNF6snx2R-sS3BrujCLwwsFTWt0v0gSaB_sv-G0uBb637VyCPKKVPoMaiNAgGLUmvdh37Q';
       final correctUrl = 'https://api.clashofclans.com/v1/players/%23gov80r9qc';
       final response = await http.get(
         Uri.parse(correctUrl),
@@ -39,21 +38,20 @@ class _HomePageState extends State<HomePage> {
       );
 
       if (response.statusCode == 200) {
-        // final jsonData = json.decode(response.body);
-        // if (jsonData != null && jsonData is Map<String, dynamic>){
-        // final player = Player.fromJson(jsonData);
-        // return player;
-        final jsonData = json.decode(response.body);
-        return jsonData;
-       //return print('JSON Response: $jsonData');
-       //  } else {
-       //    throw Exception('Invalid JSON data');
-       //  }
+         final jsonData = json.decode(response.body);
+           if (jsonData != null && jsonData is Map<String, dynamic>) {
+           final player = Player.fromJson(jsonData);
+           print(player.toJson());
+           return player;
+         } else {
+           throw Exception('Invalid JSON data');
+         }
       } else {
+        print('API request failed with status code: ${response.statusCode}');
         throw Exception('Failed to load player statistics${response.statusCode}');
       }
     } catch (e) {
-      print('Error: $e');
+      print('Error during fetching player statistics: $e');
       throw Exception('An error occurred while fetching player statistics');
     }
 
@@ -89,49 +87,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _playerStatistics = fetchPlayerStatistics(widget.playerTag);
-  // }
-
-  // Player parsePlayer(Map<String, dynamic> jsonData) {
-  //   return Player.fromJson(jsonData);
-  // }
-  //
-  // Future<Player> fetchClashOfClansData(String playertag) async {
-  //   const String API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjRjOGIxZjVhLTExZjQtNDZkZi1hZDEyLTkyMmNkOThjNGYzYiIsImlhdCI6MTY5Mjk2NjQ1NCwic3ViIjoiZGV2ZWxvcGVyLzI1MjUyOTRkLWRjNWQtYTcwOS0zYTVhLTg4Njc3YWQ5M2E1ZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjM3LjE2MS4yMTUuMjQ0Il0sInR5cGUiOiJjbGllbnQifV19.yW4Mdgmezc_0gOw3O3U2UqSsAYTbOeu2fpCIbWS3eM61K3r4Fro8TRnQ4bCWTmW66m44J_AQ5uFyKDVea4ILdA'; // Sostituisci con la tua API key
-  //   final correctUrl = 'https://api.clashofclans.com/v1/players/$playertag}';
-  //
-  //   final response = await http.get(
-  //     Uri.parse(correctUrl),
-  //     headers: {'authorization': 'Bearer $API_KEY'},
-  //   );
-  //
-  //   if (response.statusCode == 200) {
-  //     final jsonData = json.decode(response.body);
-  //     return jsonData;
-  //   } else {
-  //     throw Exception('Failed to fetch data from Clash of Clans API: ${response
-  //         .statusCode}');
-  //   }
-  // }
-
-// Utilizzo del metodo
-//   fetchData() async {
-//     try {
-//       final playerTag = '%23gov80r9qc'; // Sostituisci con il tag del giocatore desiderato
-//       final jsonData = await fetchPlayerStatistics(playerTag);
-//       print('JSON Data: $jsonData');
-//     } catch (e) {
-//       print('Error: $e');
-//     }
-//   }
 
   @override
   void initState() {
     super.initState();
-    _jsonData =  fetchPlayerStatistics(widget.playerTag);
+    _playerStatistics =  fetchPlayerStatistics(widget.playerTag);
   }
 
 
@@ -148,32 +108,146 @@ class _HomePageState extends State<HomePage> {
         onProfile: goToProfilePage,
         onLogout: logoutUser,
       ),
-      // body: Center(
-      // child: ElevatedButton(
-      //   onPressed: fetchData, // Richiama il metodo fetchData al clic del pulsante
-      //   child: Text('Fetch and Print JSON'),
-      // ),
-      // ),
-      body: FutureBuilder<Map<String, dynamic>>(
-        future: _jsonData,
+      body: FutureBuilder<Player>(
+        future: _playerStatistics,
         builder: (context, snapshot) {
+          print('Snapshot connection state: ${snapshot.connectionState}');
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
+              print('Snapshot error: ${snapshot.error}');
               return Center(
                 child: Text('Error: ${snapshot.error}'),
               );
             }
-            final jsonData = snapshot.data;
-            if (jsonData == null) {
+            final playerData = snapshot.data as Player;
+            if (playerData == null) {
               return Center(
                 child: Text('No data available'),
               );
-            }
-            final jsonString = JsonEncoder.withIndent('  ').convert(jsonData);
+            };
+            final playerJson = playerData; // Qui crei un oggetto Player dal Map
+             final jsonString = JsonEncoder.withIndent('  ').convert(playerJson);
             return SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Text(jsonString),
+                //child: Text(jsonString),
+                // child: Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     Text('Name: ${playerData.name}'),
+                //     Text('Role: ${playerData.role}'),
+                //     Text('Tag: ${playerData.tag}'),
+                //     Text('Best Trophies: ${playerData.bestTrophies.toString()}'),
+                //     Text('Best Versus Trophies: ${playerData.bestVersusTrophies.toString()}'),
+                //     Text('Builder Hall Level: ${playerData.builderHallLevel.toString()}'),
+                //     Text('Donations: ${playerData.donations.toString()}'),
+                //     Text('Donations Received: ${playerData.donationsReceived.toString()}'),
+                //     Text('Exp Level: ${playerData.expLevel.toString()}'),
+                //     Text('Town Hall Level: ${playerData.townHallLevel.toString()}'),
+                //     Text('Trophies: ${playerData.trophies.toString()}'),
+                //     Text('Versus Trophies: ${playerData.versusTrophies.toString()}'),
+                //     Text('War Stars: ${playerData.warStars.toString()}'),
+                //     Text('Clan Name: ${playerData.clan?.name}'),
+                //     Text('Clan Tag: ${playerData.clan?.tag}'),
+                //     Text('Clan ClanLevel: ${playerData.clan?.clanLevel}'),
+                //     Text('Clan BadgeUrls - Large: ${playerData.clan?.badgeUrls?.large}'),
+                //     Text('Clan BadgeUrls - Medium: ${playerData.clan?.badgeUrls?.medium}'),
+                //     Text('Clan BadgeUrls - Small: ${playerData.clan?.badgeUrls?.small}'),
+                //     Text('Label Names:'),
+                //     Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: playerData.labels!.map((label) {
+                //         return Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             Text('Label Name: ${label.name}'),
+                //             Text('Label ID: ${label.id}'),
+                //             Text('Label IconUrls - Medium: ${label.iconUrls.medium}'),
+                //             Text('Label IconUrls - Small: ${label.iconUrls.small}'),
+                //             // Aggiungi altri attributi dell'oggetto Label qui
+                //       ],
+                //     );
+                //   }).toList(),
+                // ),
+                //
+                //       Text('League Name: ${playerData.league?.name}'),
+                //       Text('League ID: ${playerData.league?.id}'),
+                //       Text('League IconUrlsx - Medium: ${playerData.league?.iconUrlsx?.medium}'),
+                //       Text('League IconUrlsx - Small: ${playerData.league?.iconUrlsx?.small}'),
+                //       Text('League IconUrlsx - Tiny: ${playerData.league?.iconUrlsx?.tiny}'),
+                //   ],
+                // ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Player Information:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                      RowInfo(label: 'Name:', value: playerData.name),
+                      RowInfo(label: 'Role:', value: playerData.role),
+                      RowInfo(label: 'Tag:', value: playerData.tag),
+                      RowInfo(label: 'Best Trophies:', value: playerData.bestTrophies.toString()),
+                      RowInfo(label: 'Best Versus Trophies:', value: playerData.bestVersusTrophies.toString()),
+                      RowInfo(label: 'Builder Hall Level:', value: playerData.builderHallLevel.toString()),
+                      RowInfo(label: 'Donations:', value: playerData.donations.toString()),
+                      RowInfo(label: 'Donations Received:', value: playerData.donationsReceived.toString()),
+                      RowInfo(label: 'Exp Level:', value: playerData.expLevel.toString()),
+                      RowInfo(label: 'Town Hall Level:', value: playerData.townHallLevel.toString()),
+                      RowInfo(label: 'Trophies:', value: playerData.trophies.toString()),
+                      RowInfo(label: 'Versus Trophies:', value: playerData.versusTrophies.toString()),
+                      RowInfo(label: 'War Stars:', value: playerData.warStars.toString()),
+                      SizedBox(height: 20),
+                      Text('Clan Information:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                      RowInfo(label: 'Clan Name:', value: playerData.clan!.name),
+                      RowInfo(label: 'Clan Tag:', value: playerData.clan!.tag),
+                      RowInfo(label: 'Clan ClanLevel:', value: playerData.clan!.clanLevel.toString()),
+                      SizedBox(height: 10),
+                      Text('Clan BadgeUrls:', style: TextStyle(fontWeight: FontWeight.bold)),
+                      //RowInfo(label: 'Large:', value: playerData.clan!.badgeUrls!.large),
+                      //Image.network(playerData.clan?.badgeUrls?.large ?? ''),
+                      //RowInfo(label: 'Medium:', value: playerData.clan!.badgeUrls!.medium),
+                      //Image.network(playerData.clan?.badgeUrls?.medium ?? ''),
+                      //RowInfo(label: 'Small:', value: playerData.clan!.badgeUrls!.small),
+                      Image.network(playerData.clan?.badgeUrls?.small ?? ''),
+                      SizedBox(height: 20),
+                      Text('Label Information:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: playerData.labels!.map((label) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Label Name:', style: TextStyle(fontWeight: FontWeight.bold)),
+                              RowInfo(label: 'Name:', value: label.name),
+                              RowInfo(label: 'ID:', value: label.id.toString()),
+                              SizedBox(height: 10),
+                              Text('Label IconUrls:', style: TextStyle(fontWeight: FontWeight.bold)),
+                              //RowInfo(label: 'Medium:', value: label.iconUrls.medium),
+                              //Image.network(label.iconUrls.medium ?? ''),
+                              //RowInfo(label: 'Small:', value: label.iconUrls.small),
+                              Image.network(label.iconUrls.small ?? ''),
+                              // Aggiungi altri attributi dell'oggetto Label qui
+                            ],
+                          );
+                        }).toList(),
+                      ),
+                      SizedBox(height: 20),
+                      Text('League Information:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      if (playerData.league != null) ...[
+                        RowInfo(label: 'League Name:', value: playerData.league!.name),
+                        RowInfo(label: 'League ID:', value: playerData.league!.id.toString()),
+                        Text('League IconUrlsx:', style: TextStyle(fontWeight: FontWeight.bold)),
+                        // RowInfo(label: 'Medium:', value: playerData.league!.iconUrlsx.medium),
+                        // RowInfo(label: 'Small:', value: playerData.league!.iconUrlsx.small),
+                        // RowInfo(label: 'Tiny:', value: playerData.league!.iconUrlsx.tiny),
+                        // Image.network(playerData.league?.iconUrlsx?.medium ?? ''),
+                        // Image.network(playerData.league?.iconUrlsx?.small ?? ''),
+                        Image.network(playerData.league?.iconUrlsx?.tiny ?? ''),
+
+                      ],
+                    ],
+                  )
+
               ),
             );
           } else {
@@ -187,78 +261,26 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+class RowInfo extends StatelessWidget {
+  final String label;
+  final String value;
 
+  RowInfo({required this.label, required this.value});
 
-
-      // body: FutureBuilder<Player>(
-      //     future: _playerStatistics,
-      //     builder: (context, snapshot) {
-      //       if (snapshot.connectionState == ConnectionState.done) {
-      //         if (snapshot.hasError) {
-      //           return Center(
-      //             child: Text('Error: ${snapshot.error}'),
-      //           );
-      //         }
-      //         final player = snapshot.data;
-      //         if (player == null) {
-      //           return Center(
-      //             child: Text('Player data is null'),
-      //           );
-      //         }
-      //         // Converti il JSON in una stringa e visualizzalo in un widget Text
-      //         final playerJson = player.toJson();
-      //         final jsonString = jsonEncode(playerJson);
-      //         return SingleChildScrollView(
-      //           child: Padding(
-      //             padding: EdgeInsets.all(16.0),
-      //             child: Text(jsonString, style: TextStyle(fontSize: 12)),
-      //           ),
-      //         );
-      //       } else {
-      //         return Center(
-      //           child: CircularProgressIndicator(),
-      //         );
-      //       }
-      //     }
-
-
-//       body:  Future<Player>(
-//         future: _playerStatistics, // Utilizza la variabile contenente il JSON
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.done) {
-//             if (snapshot.hasError) {
-//               return Center(
-//                 child: Text('Error: ${snapshot.error}'),
-//               );
-//             }
-//             final jsonData = snapshot.data;
-//             if (jsonData == null) {
-//               return Center(
-//                 child: Text('No data available'),
-//               );
-//             }
-//             // Converti il JSON in una stringa e visualizzalo in un widget Text
-//             final jsonString = jsonEncode(jsonData);
-//             return SingleChildScrollView(
-//               child: Padding(
-//                 padding: EdgeInsets.all(16.0),
-//                 child: Text(jsonString, style: TextStyle(fontSize: 12)),
-//               ),
-//             );
-//           } else {
-//             return Center(
-//               child: CircularProgressIndicator(),
-//             );
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
-
-
-
-//    ),
-//  );
-// }
-//}
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 150, // Larghezza fissa per l'etichetta
+          child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
+        ),
+        SizedBox(width: 10),
+        Expanded(
+          child: Text(value),
+        ),
+      ],
+    );
+  }
+}
