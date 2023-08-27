@@ -18,11 +18,11 @@ class _TagPageState extends State<TagPage> {
     DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
     databaseReference.child('user').child('uid').child('tag').set(tag).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Api Key salvata nel database')),
+        SnackBar(content: Text('Tag salvato nel database')),
       );
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Errore durante il salvataggio dell\' Api Key')),
+        SnackBar(content: Text('Errore durante il salvataggio dela tag')),
       );
     });
   }
