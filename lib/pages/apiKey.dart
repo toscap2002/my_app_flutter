@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/logo.dart';
@@ -12,18 +13,34 @@ class ApiKeyPage extends StatefulWidget {
 class _ApiKeyPageState extends State<ApiKeyPage> {
   final TextEditingController apiKeyController = TextEditingController();
 
-  void _saveApiKeyToFirebase() {
-    String apyKey = apiKeyController.text;
-    DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
-    databaseReference.child('user').child('uid').child('apiKey').set(apyKey).then((_) {
+  void _saveApiKeyToFirebase() async {
+    String apiKey = apiKeyController.text;
+    var user = FirebaseAuth.instance.currentUser;
+
+    if (user != null && apiKey.isNotEmpty) {
+      DatabaseReference databaseReference =
+      FirebaseDatabase.instance.reference();
+      String uid = user.uid;
+
+      await databaseReference
+          .child('user')
+          .child(uid)
+          .child('apiKey')
+          .set(apiKey)
+          .then((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Api Key salvata nel database')),
+        );
+      }).catchError((error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Errore durante il salvataggio dell\' Api Key')),
+        );
+      });
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Api Key salvata nel database')),
+        SnackBar(content: Text('La chiave non deve essere vuota')),
       );
-    }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Errore durante il salvataggio dell\' Api Key')),
-      );
-    });
+    }
   }
 
 

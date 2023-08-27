@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -12,19 +13,58 @@ class TagPage extends StatefulWidget {
 
 class _TagPageState extends State<TagPage> {
   final TextEditingController tagController = TextEditingController();
+  String userTag = ""; // Variabile per memorizzare il tag dell'utente
 
-  void _saveTagToFirebase() {
+  @override
+  void initState() {
+    super.initState();
+    // Carica il tag dell'utente corrente al momento dell'inizializzazione dello stato
+    loadUserTag();
+  }
+
+  void loadUserTag() async {
+    var user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
+      String uid = user.uid;
+
+      DataSnapshot snapshot = (await databaseReference.child('user').child(uid).child('tag').once()) as DataSnapshot;
+      if (snapshot.value != null) {
+        setState(() {
+          userTag = snapshot.value.toString();
+        });
+      }
+    }
+  }
+
+  void _saveTagToFirebase() async {
     String tag = tagController.text;
-    DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
-    databaseReference.child('user').child('uid').child('tag').set(tag).then((_) {
+    var user = FirebaseAuth.instance.currentUser;
+
+    if (user != null && tag.isNotEmpty) {
+      DatabaseReference databaseReference =
+      FirebaseDatabase.instance.reference();
+      String uid = user.uid;
+
+      await databaseReference
+          .child('user')
+          .child(uid)
+          .child('tag')
+          .set(tag)
+          .then((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('TAG salvato nel database')),
+        );
+      }).catchError((error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Errore durante il salvataggio del TAG')),
+        );
+      });
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Tag salvato nel database')),
+        SnackBar(content: Text('Il TAG non deve essere vuoto')),
       );
-    }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Errore durante il salvataggio dela tag')),
-      );
-    });
+    }
   }
 
 
@@ -71,11 +111,13 @@ class _TagPageState extends State<TagPage> {
                           hintStyle: TextStyle(color: Colors.black87),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(width: 5, color: Colors.orange),
-                          ),focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 5, color: Colors.amber),
-                        ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(width: 5, color: Colors.amber),
+                          ),
                           fillColor: Colors.white38,
-                          filled: true,
+                          filled: false,
+                          hintText: "Il tuo TAG attuale è: $userTag",
                         ),
                       ),
 
