@@ -7,6 +7,7 @@ import 'package:my_app_flutter/model/player.dart';
 import 'package:my_app_flutter/pages/about.dart';
 import 'package:my_app_flutter/pages/apiKey.dart';
 import 'package:my_app_flutter/pages/profilePage.dart';
+import 'package:my_app_flutter/pages/tagPage.dart';
 import 'package:my_app_flutter/pages/topPage.dart';
 import 'package:my_app_flutter/pages/tutorialPage.dart';
 import 'package:provider/provider.dart';
@@ -111,6 +112,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void goToTagPage() {
+    //pop menu drawer
+    Navigator.pop(context);
+    //go to about page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TagPage(),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -132,6 +145,7 @@ class _HomePageState extends State<HomePage> {
         onLogout: logoutUser,
         onTutorial: goToTutorialPage,
         onApiKey: goToApiKeyPage,
+        onTagPage: goToTagPage,
       ),
       body: FutureBuilder<Player>(
         future: _playerStatistics,

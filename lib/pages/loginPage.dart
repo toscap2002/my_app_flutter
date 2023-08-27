@@ -52,26 +52,6 @@ class _LoginPageState  extends State<LoginPage>{
     }
   }
 
-  // //messaggio di errore
-  // void showErrorMessage(String message){
-  //   showDialog(
-  //       context: context,
-  //       builder: (context){
-  //        return AlertDialog(
-  //          backgroundColor: Colors.deepPurpleAccent,
-  //           title: Center(
-  //             child: Text(message,
-  //               style: TextStyle(color: Colors.white),),
-  //           ),
-  //           );
-  //
-  //       },
-  //       );
-  // }
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

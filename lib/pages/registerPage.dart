@@ -18,10 +18,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState  extends State<RegisterPage> {
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
-
   //text editing controller
   final tagController = TextEditingController();
   final nameController = TextEditingController();

@@ -1,21 +1,22 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app_flutter/components/logo.dart';
-import 'package:my_app_flutter/components/textfield.dart';
 
-class ApiKeyPage extends StatefulWidget {
+import '../components/logo.dart';
+
+class TagPage extends StatefulWidget {
+  const TagPage({super.key});
 
   @override
-  State<ApiKeyPage> createState() => _ApiKeyPageState();
+  State<TagPage> createState() => _TagPageState();
 }
 
-class _ApiKeyPageState extends State<ApiKeyPage> {
-  final TextEditingController apiKeyController = TextEditingController();
+class _TagPageState extends State<TagPage> {
+  final TextEditingController tagController = TextEditingController();
 
-  void _saveApiKeyToFirebase() {
-    String apyKey = apiKeyController.text;
+  void _saveTagToFirebase() {
+    String tag = tagController.text;
     DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
-    databaseReference.child('user').child('uid').child('apiKey').set(apyKey).then((_) {
+    databaseReference.child('user').child('uid').child('tag').set(tag).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Api Key salvata nel database')),
       );
@@ -27,12 +28,11 @@ class _ApiKeyPageState extends State<ApiKeyPage> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('API KEY'),
+        title: Text('INSERIRE TAG'),
         centerTitle: true,
         backgroundColor: Colors.pinkAccent,
       ),
@@ -51,7 +51,7 @@ class _ApiKeyPageState extends State<ApiKeyPage> {
 
                 Center(
                   child: Text(
-                    'Inserisci nello spazio sottostante l\'api key!\nRicorda di usare l\'indirizzo IP del tuo telefono (Per conoscere l\'IP del tuo smartphonevai su whatsmyip)',
+                    'Inserisci il tuo Tag che troverai nel tuo profilo di Clash of Clans',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 18),
                   ),
@@ -66,7 +66,7 @@ class _ApiKeyPageState extends State<ApiKeyPage> {
                     children: [
                       TextField(
                         style: TextStyle(color: Colors.black87),
-                        controller: apiKeyController,
+                        controller: tagController,
                         decoration: InputDecoration(
                           hintStyle: TextStyle(color: Colors.black87),
                           enabledBorder: OutlineInputBorder(
@@ -83,7 +83,7 @@ class _ApiKeyPageState extends State<ApiKeyPage> {
 
                       ElevatedButton(
                         onPressed: () {
-                          _saveApiKeyToFirebase();
+                          _saveTagToFirebase();
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.blue, // Colore di sfondo del pulsante
@@ -93,7 +93,7 @@ class _ApiKeyPageState extends State<ApiKeyPage> {
                           ),
                           padding: const EdgeInsets.all(25),
                         ),
-                        child: Text('Salva API KEY', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                        child: Text('Salva Tag', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                       ),
                     ],
                   ),
@@ -106,5 +106,3 @@ class _ApiKeyPageState extends State<ApiKeyPage> {
     );
   }
 }
-
-

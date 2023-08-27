@@ -7,7 +7,8 @@ class MyDrawer extends StatelessWidget {
   final void Function()? onLogout;
   final void Function()? onTutorial;
   final void Function()? onApiKey;
-  const MyDrawer({super.key, required this.onAbout, required this.onProfile, required this.onLogout, required this.onTutorial, required this.onApiKey});
+  final void Function()? onTagPage;
+  const MyDrawer({super.key, required this.onAbout, required this.onProfile, required this.onLogout, required this.onTutorial, required this.onApiKey, required this.onTagPage});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,8 @@ class MyDrawer extends StatelessWidget {
             MyList(icon: Icons.account_circle, text: 'P R O F I L O', onTap: onProfile,
             ),
             MyList(icon: Icons.key, text: 'A P I   K E Y', onTap: onApiKey,
+            ),
+            MyList(icon: Icons.tag, text: 'T A G', onTap: onTagPage,
             ),
             MyList(icon: Icons.title_outlined, text: 'T U T O R I A L', onTap: onTutorial,
             ),
