@@ -129,7 +129,7 @@ class _SearchPageState extends State<SearchPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PlayerStatistics(userID: userData.userId, namePS: userData.name), // Passa l'ID dell'utente
+            builder: (context) => PlayerStatistics(userID: userData.userId, namePS: userData.name, userTag: userData.tag), // Passa l'ID dell'utente
           ),
         );
       },

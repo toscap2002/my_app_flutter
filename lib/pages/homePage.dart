@@ -87,22 +87,27 @@ class _HomePageState extends State<HomePage> {
           }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('E\' andato storto qualcosa nel recupero dei dati')),
+            SnackBar(content: Text('An error occurred while fetching player statistics\n'
+                'Check your TAG or Api Key')),
           );
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('E\' andato storto qualcosa nel recupero dei dati')),
+          SnackBar(content: Text('An error occurred while fetching player statistics\n'
+              'Check your TAG or Api Key')),
         );
       }
     } catch (e) {
       print('Error during fetching player statistics: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred while fetching player statistics')),
+        SnackBar(content: Text('An error occurred while fetching player statistics\n'
+            'Check your TAG or Api Key')),
       );
-      throw Exception('An error occurred while fetching player statistics');
+      throw Exception('An error occurred while fetching player statistics\n'
+          'Check your TAG or Api Key');
     }
-    throw Exception('An error occurred while fetching player statistics');
+    throw Exception('An error occurred while fetching player statistics\n'
+        'Check your TAG or Api Key');
   }
 
   @override

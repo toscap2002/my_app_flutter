@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/logo.dart';
 import 'package:my_app_flutter/components/textfield.dart';
 
+import 'homePage.dart';
+
 class ApiKeyPage extends StatefulWidget {
 
   @override
@@ -27,10 +29,32 @@ class _ApiKeyPageState extends State<ApiKeyPage> {
           .child(uid)
           .child('apiKey')
           .set(apiKey)
-          .then((_) {
+          .then((_) async {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Api Key salvata nel database')),
         );
+
+        DatabaseEvent tagEvent = await databaseReference
+            .child('user')
+            .child(uid)
+            .child('tag')
+            .once();
+
+        if (tagEvent.snapshot.value != null) {
+          var rawTag = tagEvent.snapshot.value.toString();
+
+          // Naviga verso HomePage solo se il salvataggio ha successo
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(playerTag: rawTag), // Passa il valore corretto di playerTag
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('E\' andato storto qualcosa nel recupero del TAG')),
+          );
+        }
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Errore durante il salvataggio dell\' Api Key')),

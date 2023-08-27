@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../components/logo.dart';
+import 'homePage.dart';
 
 class TagPage extends StatefulWidget {
   const TagPage({super.key});
@@ -13,7 +14,8 @@ class TagPage extends StatefulWidget {
 
 class _TagPageState extends State<TagPage> {
   final TextEditingController tagController = TextEditingController();
-  String userTag = ""; // Variabile per memorizzare il tag dell'utente
+
+  var userTag = "";
 
   @override
   void initState() {
@@ -28,12 +30,29 @@ class _TagPageState extends State<TagPage> {
       DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
       String uid = user.uid;
 
-      DataSnapshot snapshot = (await databaseReference.child('user').child(uid).child('tag').once()) as DataSnapshot;
-      if (snapshot.value != null) {
+      // Utilizza il metodo once() per ottenere un DatabaseEvent
+      DatabaseEvent tagEvent = await databaseReference
+          .child('user')
+          .child(uid)
+          .child('tag')
+          .once();
+
+      if (tagEvent.snapshot.value != null) {
         setState(() {
-          userTag = snapshot.value.toString();
+          userTag = tagEvent.snapshot.value.toString(); // Aggiorna la variabile a livello di classe
         });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('E\' andato storto qualcosa nel recupero del TAG')),
+        );
       }
+
+      // DataSnapshot snapshot = (await databaseReference.child('user').child(uid).child('tag').once()) as DataSnapshot;
+      // if (snapshot.value != null) {
+      //   setState(() {
+      //     userTag = snapshot.value.toString();
+      //   });
+      // }
     }
   }
 
@@ -54,6 +73,13 @@ class _TagPageState extends State<TagPage> {
           .then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('TAG salvato nel database')),
+        );
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(playerTag: tag), // Passa il valore corretto di playerTag
+          ),
         );
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -128,14 +154,14 @@ class _TagPageState extends State<TagPage> {
                           _saveTagToFirebase();
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.purple[400], // Colore di sfondo del pulsante
-                          onPrimary: Colors.white, // Colore del testo del pulsante
+                          primary: Colors.purple[400],
+                          onPrimary: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20), // Bordo arrotondato
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           padding: const EdgeInsets.all(25),
                         ),
-                        child: Text('Salva Tag', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                        child: Text('Salva Tag', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
