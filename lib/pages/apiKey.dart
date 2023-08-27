@@ -86,7 +86,7 @@ class _ApiKeyPageState extends State<ApiKeyPage> {
                           _saveApiKeyToFirebase();
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.blue, // Colore di sfondo del pulsante
+                          primary: Colors.purple[400], // Colore di sfondo del pulsante
                           onPrimary: Colors.white, // Colore del testo del pulsante
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20), // Bordo arrotondato

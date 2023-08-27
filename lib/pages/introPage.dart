@@ -34,7 +34,7 @@ class _IntroPageState extends State<IntroPage>{
     SearchPage(),
 
     //pagina per visualizzare la top 50 players
-    //TopPage(),
+    TopPage(),
   ];
 
   @override
@@ -45,7 +45,7 @@ class _IntroPageState extends State<IntroPage>{
       bottomNavigationBar: CurvedNavigationBar(
         index: _selectIndex,
         onTap: navigationBottomBar,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey.shade100,
         color: Colors.pinkAccent,
         animationDuration: Duration(milliseconds: 300),
         items: [
