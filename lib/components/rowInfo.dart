@@ -8,17 +8,20 @@ class RowInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 150, // Larghezza fissa per l'etichetta
-          child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
+        Center(
+          child: Text(
+            label,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-        SizedBox(width: 10),
-        Expanded(
+        SizedBox(height: 8), // Spazio tra label e valore
+        Center(
           child: Text(value),
         ),
+        SizedBox(height: 16), // Spazio maggiore tra valore e label successivo
       ],
     );
   }
