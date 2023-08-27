@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/drawer.dart';
+import 'package:my_app_flutter/components/rowInfo.dart';
 import 'package:my_app_flutter/model/player.dart';
 import 'package:my_app_flutter/pages/about.dart';
 import 'package:my_app_flutter/pages/profilePage.dart';
@@ -261,26 +262,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class RowInfo extends StatelessWidget {
-  final String label;
-  final String value;
-
-  RowInfo({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 150, // Larghezza fissa per l'etichetta
-          child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
-        ),
-        SizedBox(width: 10),
-        Expanded(
-          child: Text(value),
-        ),
-      ],
-    );
-  }
-}
