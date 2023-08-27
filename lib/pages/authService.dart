@@ -48,11 +48,13 @@ class AuthService extends ChangeNotifier{
       // Aggiungi i dati dell'utente nel database Realtime
       if (userCredential.user != null) {
         final userId = userCredential.user!.uid;
+        var apiKey = "";
         _database.reference().child('user').child(userId).set({
           'uid': userCredential.user!.uid,
           'email': email,
           'name': name,
           'tag' : tag,
+          'apiKey' : apiKey,
         });
       }
 
