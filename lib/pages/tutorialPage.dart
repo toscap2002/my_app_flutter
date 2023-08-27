@@ -66,6 +66,7 @@ class _TutorialPageState extends State<TutorialPage> {
       appBar: AppBar(
         backgroundColor: Colors.pinkAccent,
         title: Text('Tutorial App'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(

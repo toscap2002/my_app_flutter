@@ -194,7 +194,7 @@ class _LoginPageState  extends State<LoginPage>{
                           child: Container(
                               padding: const EdgeInsets.all(10),
                               margin: const EdgeInsets.symmetric(horizontal: 300),
-                              decoration: BoxDecoration(color: Colors.purple[400],
+                              decoration: BoxDecoration(color: Colors.pinkAccent[400],
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             child: const Text(
@@ -204,7 +204,7 @@ class _LoginPageState  extends State<LoginPage>{
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
                               ),
-                            )
+                            ),
                         ),
                         ),
                           ],

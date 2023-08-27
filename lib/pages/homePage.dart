@@ -5,8 +5,10 @@ import 'package:my_app_flutter/components/drawer.dart';
 import 'package:my_app_flutter/components/rowInfo.dart';
 import 'package:my_app_flutter/model/player.dart';
 import 'package:my_app_flutter/pages/about.dart';
+import 'package:my_app_flutter/pages/apiKey.dart';
 import 'package:my_app_flutter/pages/profilePage.dart';
 import 'package:my_app_flutter/pages/topPage.dart';
+import 'package:my_app_flutter/pages/tutorialPage.dart';
 import 'package:provider/provider.dart';
 import 'package:my_app_flutter/pages/authService.dart';
 import 'package:http/http.dart' as http;
@@ -22,8 +24,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //late Future<Map<String, dynamic>> _jsonData;
-
   late Future<Player> _playerStatistics;
 
   Future<Player> fetchPlayerStatistics(String playerTag) async {
@@ -87,6 +87,29 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void goToTutorialPage() {
+    //pop menu drawer
+    Navigator.pop(context);
+    //go to about page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TutorialPage(),
+      ),
+    );
+  }
+
+  void goToApiKeyPage() {
+    //pop menu drawer
+    Navigator.pop(context);
+    //go to about page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ApiKeyPage(),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -107,6 +130,8 @@ class _HomePageState extends State<HomePage> {
         onAbout: goToAboutPage,
         onProfile: goToProfilePage,
         onLogout: logoutUser,
+        onTutorial: goToTutorialPage,
+        onApiKey: goToApiKeyPage,
       ),
       body: FutureBuilder<Player>(
         future: _playerStatistics,
@@ -205,12 +230,11 @@ class _HomePageState extends State<HomePage> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    'Clan BadgeUrls:',
-                                    style: TextStyle(fontWeight: FontWeight.bold),
-                                  ),
                                   SizedBox(width: 10), // Spazio tra l'etichetta e l'immagine
-                                  Image.network(playerData.clan?.badgeUrls?.small ?? ''),
+                                  Center(
+                                    child: Image.network(playerData.clan?.badgeUrls?.small ?? ''),
+                                  ),
+
                                 ],
                               ),
                                //RowInfo(label: 'Large:', value: playerData.clan!.badgeUrls!.large),
@@ -247,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 ],
                               ),
-                              Column(
+                              Column (
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: playerData.labels!.map((label) {
                                   return  Container(
@@ -269,23 +293,10 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                   //Text('Label Name:', style: TextStyle(fontWeight: FontWeight.bold)),
                                   RowInfo(label: 'Name:', value: label.name),
-                                  RowInfo(label: 'ID:', value: label.id.toString()),
                                     SizedBox(height: 10),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Label IconUrls:',
-                                          style: TextStyle(fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(width: 10), // Spazio tra l'etichetta e l'immagine
-                                        Image.network(label.iconUrls.small ?? ''),
-                                      ],
+                                    Center(
+                                      child: Image.network(label.iconUrls.small ?? ''),
                                     ),
-
-                                  //RowInfo(label: 'Medium:', value: label.iconUrls.medium),
-                                  //Image.network(label.iconUrls.medium ?? ''),
-                                  //RowInfo(label: 'Small:', value: label.iconUrls.small),
                                   ],
                                   ),
                                     );
@@ -312,28 +323,14 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [Text(
-                                  'LEAGUE',
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                ),
-                                ],
+                              RowInfo(label: 'LEAGUE NAME:', value: playerData.league!.name),
+
+                              SizedBox(width: 10), // Spazio tra l'etichetta e l'immagine
+                              Center(
+                               child: Image.network(playerData.league?.iconUrls?.small ?? ''),
                               ),
-                              if (playerData.league != null) ...[
-                                RowInfo(label: 'League Name:', value: playerData.league!.name),
-                                RowInfo(label: 'League ID:', value: playerData.league!.id.toString()),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'League IconUrls:',
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(width: 10), // Spazio tra l'etichetta e l'immagine
-                                    Image.network(playerData.league?.iconUrls?.tiny ?? ''),
-                                  ],
-                                ),
+                            ],
+                          ),
                                // Text('League IconUrlsx:', style: TextStyle(fontWeight: FontWeight.bold)),
                                 // RowInfo(label: 'Medium:', value: playerData.league!.iconUrlsx.medium),
                                 // RowInfo(label: 'Small:', value: playerData.league!.iconUrlsx.small),
@@ -341,11 +338,6 @@ class _HomePageState extends State<HomePage> {
                                 // Image.network(playerData.league?.iconUrlsx?.medium ?? ''),
                                 // Image.network(playerData.league?.iconUrlsx?.small ?? ''),
                                // Image.network(playerData.league?.iconUrls?.tiny ?? ''),
-
-                      ],
-                            ],
-                            )
-
                          ),
                     ],
                   ),

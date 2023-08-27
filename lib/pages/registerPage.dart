@@ -5,6 +5,7 @@ import 'package:my_app_flutter/components/button.dart';
 import 'package:my_app_flutter/components/logo.dart';
 import 'package:my_app_flutter/components/textfield.dart';
 import 'package:my_app_flutter/pages/authService.dart';
+import 'package:my_app_flutter/pages/tutorialPage.dart';
 import 'package:provider/provider.dart';
 
 
@@ -168,9 +169,33 @@ class _RegisterPageState  extends State<RegisterPage> {
                                 )
                             ),
                           ],
-                        )
-
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            // Quando il pulsante viene premuto, apri la nuova pagina
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => TutorialPage()),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.symmetric(horizontal: 300),
+                            decoration: BoxDecoration(color: Colors.pinkAccent[400],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child:        const Text(
+                              'Tutorial',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
                       ]),
+
                 )
 
 
