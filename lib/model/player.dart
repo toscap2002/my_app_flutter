@@ -96,16 +96,10 @@ class Player {
       clan = Clan.fromJson(clanJson);
     }
 
-   // League? league = leagueJson != null ? League.fromJson(leagueJson) : null;
     League? league;
     if (leagueJson != null && leagueJson is Map<String, dynamic>) {
-      final iconUrlsJson = leagueJson['iconUrlsx'];
-      if (iconUrlsJson != null && iconUrlsJson is Map<String, dynamic>) {
-        league = League.fromJson(leagueJson);
-      }
+      league = League.fromJson(leagueJson);
     }
-
-
 
 
     List<Label> labels = [];

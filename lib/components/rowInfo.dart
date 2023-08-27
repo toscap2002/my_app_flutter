@@ -11,16 +11,16 @@ class RowInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(
-          child: Text(
-            label,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
-        SizedBox(height: 8), // Spazio tra label e valore
-        Center(
-          child: Text(value),
-        ),
+         Row(
+           children: [
+             Text(
+                label,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+             SizedBox(width: 8), // Spazio tra label e valore
+             Text(value),
+           ],
+         ),
         SizedBox(height: 16), // Spazio maggiore tra valore e label successivo
       ],
     );

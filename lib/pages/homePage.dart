@@ -7,7 +7,6 @@ import 'package:my_app_flutter/model/player.dart';
 import 'package:my_app_flutter/pages/about.dart';
 import 'package:my_app_flutter/pages/profilePage.dart';
 import 'package:my_app_flutter/pages/topPage.dart';
-import 'package:my_app_flutter/util/constats.dart';
 import 'package:provider/provider.dart';
 import 'package:my_app_flutter/pages/authService.dart';
 import 'package:http/http.dart' as http;
@@ -31,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     try {
       print('Fetching player statistics...');
       const String API_KEY =
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjRmODVmNTlhLWM5YjYtNGFiNy1iZmY2LTI1Mzc1NmY1YWYyYSIsImlhdCI6MTY5MzEyNjYyMiwic3ViIjoiZGV2ZWxvcGVyLzI1MjUyOTRkLWRjNWQtYTcwOS0zYTVhLTg4Njc3YWQ5M2E1ZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjIuMzguMTM0LjI5Il0sInR5cGUiOiJjbGllbnQifV19.vqNBbIf25rIG-gQesQ_OhkgOHZoevMmsDwkQcKUyVEPMhlyKMxMD92EgGmScekFSf5bMfPxAZiIRuFWvhvFuHw';
+'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImFhYTQxNjcwLTVjZjctNGNjMy05YmViLTU3MTk1ZGQ3MWZhZiIsImlhdCI6MTY5MzEzODc2MSwic3ViIjoiZGV2ZWxvcGVyLzI1MjUyOTRkLWRjNWQtYTcwOS0zYTVhLTg4Njc3YWQ5M2E1ZiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjIuMzguMTM0LjEzIl0sInR5cGUiOiJjbGllbnQifV19.aLgAvAQ8OJ9kVWziVF_e53h9zRsbAa4YwvV22yK-LRYAXNOp4vQd5YZDxMdOw8qRNWScqS1j1KRMM6l3XHdHEw';
       final correctUrl = 'https://api.clashofclans.com/v1/players/%23gov80r9qc';
       final response = await http.get(
         Uri.parse(correctUrl),
@@ -143,21 +142,6 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(height: 10),
                       Container(
                         decoration: BoxDecoration(
-                        //   color: Colors.teal[400],
-                        //   borderRadius: BorderRadius.circular(10),
-                        //   boxShadow: [
-                        //     BoxShadow(
-                        //       color: Colors.white.withOpacity(0.3), // Colore dell'effetto di illuminazione
-                        //       offset: Offset(-6, -6), // Direzione dell'effetto di illuminazione (valori negativi per bordi interni)
-                        //       blurRadius: 6,
-                        //     ),
-                        //     BoxShadow(
-                        //       color: Colors.black.withOpacity(0.2),
-                        //       offset: Offset(4, 4),
-                        //       blurRadius: 6,
-                        //     ),
-                        //   ],
-                        // ),
                           borderRadius: BorderRadius.circular(10),
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
@@ -191,21 +175,6 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(height: 20),
                       Container(
                         decoration: BoxDecoration(
-                        //   color: Colors.indigo[400],
-                        //   borderRadius: BorderRadius.circular(10),
-                        //   boxShadow: [
-                        //     BoxShadow(
-                        //       color: Colors.white.withOpacity(0.3), // Colore dell'effetto di illuminazione
-                        //       offset: Offset(-6, -6), // Direzione dell'effetto di illuminazione (valori negativi per bordi interni)
-                        //       blurRadius: 6,
-                        //     ),
-                        //     BoxShadow(
-                        //       color: Colors.black.withOpacity(0.2),
-                        //       offset: Offset(4, 4),
-                        //       blurRadius: 6,
-                        //     ),
-                        //   ],
-                        // ),
                           borderRadius: BorderRadius.circular(10),
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
@@ -220,25 +189,30 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                              crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Center(
-                                child: Text(
+                              Row(
+                                children: [
+                                  Text(
                                   'CLAN',
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
+                                ],
                               ),
                                 SizedBox(height: 10),
                                 RowInfo(label: 'Clan Name:', value: playerData.clan!.name),
                                 RowInfo(label: 'Clan Tag:', value: playerData.clan!.tag),
                                 RowInfo(label: 'Clan ClanLevel:', value: playerData.clan!.clanLevel.toString()),
                               SizedBox(height: 10),
-                              Center(
-                                child: Text('Clan BadgeUrls:', style: TextStyle(fontWeight: FontWeight.bold)),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Clan BadgeUrls:',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(width: 10), // Spazio tra l'etichetta e l'immagine
+                                  Image.network(playerData.clan?.badgeUrls?.small ?? ''),
+                                ],
                               ),
-                              SizedBox(height: 10),
-                              Center(
-                                child:   Image.network(playerData.clan?.badgeUrls?.small ?? ''),
-                              ),
-                               SizedBox(height: 10),
                                //RowInfo(label: 'Large:', value: playerData.clan!.badgeUrls!.large),
                               //Image.network(playerData.clan?.badgeUrls?.large ?? ''),
                               //RowInfo(label: 'Medium:', value: playerData.clan!.badgeUrls!.medium),
@@ -252,21 +226,6 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(height: 20),
                       Container(
                         decoration: BoxDecoration(
-                        //   color: Colors.lightGreen,
-                        //   borderRadius: BorderRadius.circular(10),
-                        //   boxShadow: [
-                        //     BoxShadow(
-                        //       color: Colors.white.withOpacity(0.3), // Colore dell'effetto di illuminazione
-                        //       offset: Offset(-6, -6), // Direzione dell'effetto di illuminazione (valori negativi per bordi interni)
-                        //       blurRadius: 6,
-                        //     ),
-                        //     BoxShadow(
-                        //       color: Colors.black.withOpacity(0.2),
-                        //       offset: Offset(4, 4),
-                        //       blurRadius: 6,
-                        //     ),
-                        //   ],
-                        // ),
                           borderRadius: BorderRadius.circular(10),
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
@@ -281,11 +240,12 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Center(
-                                child: Text(
+                              Row(
+                                children: [Text(
                                   'LABEL ',
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
+                                ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -294,21 +254,6 @@ class _HomePageState extends State<HomePage> {
                                     margin: EdgeInsets.symmetric(vertical: 10),
                                     padding: EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                      // color: Colors.lightGreen[300],
-                                      // borderRadius: BorderRadius.circular(10),
-                                      // boxShadow: [
-                                      //   BoxShadow(
-                                      //     color: Colors.white.withOpacity(0.3), // Colore dell'effetto di illuminazione
-                                      //     offset: Offset(-6, -6), // Direzione dell'effetto di illuminazione (valori negativi per bordi interni)
-                                      //     blurRadius: 6,
-                                      //   ),
-                                      //   BoxShadow(
-                                      //       color: Colors.black.withOpacity(0.2),
-                                      //       offset: Offset(4, 4),
-                                      //       blurRadius: 6,
-                                      //     ),
-                                      //   ],
-                                      // ),
                                       borderRadius: BorderRadius.circular(10),
                                       gradient: LinearGradient(
                                         begin: Alignment.topLeft,
@@ -326,12 +271,16 @@ class _HomePageState extends State<HomePage> {
                                   RowInfo(label: 'Name:', value: label.name),
                                   RowInfo(label: 'ID:', value: label.id.toString()),
                                     SizedBox(height: 10),
-                                    Center(
-                                      child: Text('Label IconUrls:', style: TextStyle(fontWeight: FontWeight.bold)),
-                                    ),
-                                  SizedBox(height: 10),
-                                    Center(
-                                      child: Image.network(label.iconUrls.small ?? ''),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Label IconUrls:',
+                                          style: TextStyle(fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(width: 10), // Spazio tra l'etichetta e l'immagine
+                                        Image.network(label.iconUrls.small ?? ''),
+                                      ],
                                     ),
 
                                   //RowInfo(label: 'Medium:', value: label.iconUrls.medium),
@@ -349,21 +298,6 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(height: 20),
                       Container(
                           decoration: BoxDecoration(
-                          //   color: Colors.deepOrange[300],
-                          //   borderRadius: BorderRadius.circular(10),
-                          //   boxShadow: [
-                          //     BoxShadow(
-                          //       color: Colors.white.withOpacity(0.3), // Colore dell'effetto di illuminazione
-                          //       offset: Offset(-6, -6), // Direzione dell'effetto di illuminazione (valori negativi per bordi interni)
-                          //       blurRadius: 6,
-                          //     ),
-                          //     BoxShadow(
-                          //       color: Colors.black.withOpacity(0.2),
-                          //       offset: Offset(4, 4),
-                          //       blurRadius: 6,
-                          //     ),
-                          //   ],
-                          // ),
                             borderRadius: BorderRadius.circular(10),
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
@@ -378,22 +312,35 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Center(
-                                child: Text(
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [Text(
                                   'LEAGUE',
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
+                                ],
                               ),
                               if (playerData.league != null) ...[
                                 RowInfo(label: 'League Name:', value: playerData.league!.name),
                                 RowInfo(label: 'League ID:', value: playerData.league!.id.toString()),
-                                Text('League IconUrlsx:', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'League IconUrls:',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(width: 10), // Spazio tra l'etichetta e l'immagine
+                                    Image.network(playerData.league?.iconUrls?.tiny ?? ''),
+                                  ],
+                                ),
+                               // Text('League IconUrlsx:', style: TextStyle(fontWeight: FontWeight.bold)),
                                 // RowInfo(label: 'Medium:', value: playerData.league!.iconUrlsx.medium),
                                 // RowInfo(label: 'Small:', value: playerData.league!.iconUrlsx.small),
                                 // RowInfo(label: 'Tiny:', value: playerData.league!.iconUrlsx.tiny),
                                 // Image.network(playerData.league?.iconUrlsx?.medium ?? ''),
                                 // Image.network(playerData.league?.iconUrlsx?.small ?? ''),
-                                Image.network(playerData.league?.iconUrlsx?.tiny ?? ''),
+                               // Image.network(playerData.league?.iconUrls?.tiny ?? ''),
 
                       ],
                             ],
