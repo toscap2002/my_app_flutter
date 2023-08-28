@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app_flutter/components/button.dart';
 import 'package:my_app_flutter/components/logo.dart';
 import 'package:my_app_flutter/components/textfield.dart';
 import 'package:my_app_flutter/pages/authService.dart';
@@ -137,10 +136,28 @@ class _RegisterPageState  extends State<RegisterPage> {
 
                         const SizedBox(height: 25),
 
-                        //Login
-                        MyButton(
-                          text: "Registrati",
-                          onTap: signUserUp,
+                        //Registrare
+                        ElevatedButton(
+                          onPressed: signUserUp,
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.purple[400], // Colore di sfondo del pulsante
+                            onPrimary: Colors.white, // Colore del testo del pulsante
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8), // Bordo arrotondato
+                            ),
+                            padding: EdgeInsets.all(25),
+                            maximumSize: Size(200, 80),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'LOGIN',
+                              style:  TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
                         ),
 
                         const SizedBox(height: 25),
