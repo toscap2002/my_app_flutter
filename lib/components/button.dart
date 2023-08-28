@@ -13,13 +13,16 @@ class MyButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-      padding: const EdgeInsets.all(25),
-      margin: const EdgeInsets.symmetric(horizontal: 300),
-      decoration: BoxDecoration(color: Colors.purple[400],
-      borderRadius: BorderRadius.circular(8),
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        primary: Colors.purple[400], // Colore di sfondo del pulsante
+        onPrimary: Colors.white, // Colore del testo del pulsante
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8), // Bordo arrotondato
+        ),
+        padding: EdgeInsets.all(25),
+        maximumSize: Size(200, 80),
       ),
       child: Center(
           child: Text(
@@ -30,8 +33,7 @@ class MyButton extends StatelessWidget{
               fontSize: 16,
             ),
           ),
-      ),
-      ),
+    ),
     );
 
   }

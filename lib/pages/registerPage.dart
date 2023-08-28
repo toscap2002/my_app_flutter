@@ -166,31 +166,36 @@ class _RegisterPageState  extends State<RegisterPage> {
                             ),
                           ],
                         ),
-                        GestureDetector(
-                          onTap: () {
+
+                        const SizedBox(height: 25),
+
+                        ElevatedButton(
+                          onPressed: () {
                             // Quando il pulsante viene premuto, apri la nuova pagina
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => TutorialPage()),
                             );
                           },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            margin: const EdgeInsets.symmetric(horizontal: 300),
-                            decoration: BoxDecoration(color: Colors.pinkAccent[400],
-                              borderRadius: BorderRadius.circular(8),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.pinkAccent[400], // Colore di sfondo del pulsante
+                            onPrimary: Colors.white, // Colore del testo del pulsante
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8), // Bordo arrotondato
                             ),
-                            child:        const Text(
-                              'Tutorial',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
+                            padding: const EdgeInsets.all(25),
+                          ),
+                          child: const Text(
+                            'Tutorial',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
                             ),
                           ),
                         ),
-                      ]),
+                      ],
+                  ),
 
                 )
 

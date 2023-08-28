@@ -163,20 +163,22 @@ class _LoginPageState  extends State<LoginPage>{
                         //     );
                         //   },
                         // ),
-                        GestureDetector(
-                            onTap: () {
+                        ElevatedButton(
+                            onPressed: () {
                               // Quando il pulsante viene premuto, apri la nuova pagina
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => TutorialPage()),
                               );
                             },
-                          child: Container(
-                              padding: const EdgeInsets.all(10),
-                              margin: const EdgeInsets.symmetric(horizontal: 300),
-                              decoration: BoxDecoration(color: Colors.pinkAccent[400],
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.pinkAccent[400], // Colore di sfondo del pulsante
+                            onPrimary: Colors.white, // Colore del testo del pulsante
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8), // Bordo arrotondato
+                            ),
+                            padding: const EdgeInsets.all(25),
+                          ),
                             child: const Text(
                               'Tutorial',
                               style: TextStyle(
@@ -185,7 +187,6 @@ class _LoginPageState  extends State<LoginPage>{
                                 fontSize: 20,
                               ),
                             ),
-                        ),
                         ),
                           ],
                   ),

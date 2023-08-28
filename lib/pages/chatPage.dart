@@ -45,7 +45,6 @@ class Message {
 class _ChatPageState extends State<ChatPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final DatabaseReference _database = FirebaseDatabase.instance.reference();
-  List<Message> _messages = [];
   TextEditingController _messageController = TextEditingController();
   ScrollController _scrollController = ScrollController();
   StreamController<void> _scrollToBottomStreamController = StreamController<void>();
