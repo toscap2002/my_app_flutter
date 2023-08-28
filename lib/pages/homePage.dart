@@ -79,35 +79,35 @@ class _HomePageState extends State<HomePage> {
               print(player.toJson());
               return player;
             } else {
-              throw Exception('Invalid JSON data');
+              throw Exception('JSON data invalido');
             }
           } else {
-            print('API request failed with status code: ${response.statusCode}');
+            print('Richiesta API fallita: ${response.statusCode}');
             throw Exception('Failed to load player statistics${response.statusCode}');
           }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('An error occurred while fetching player statistics\n'
-                'Check your TAG or Api Key')),
+            SnackBar(content: Text('Errore nel recupero delle statistiche del personaggio\n'
+                'Controlla il tuo TAG e l\'API KEY')),
           );
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('An error occurred while fetching player statistics\n'
-              'Check your TAG or Api Key')),
+          SnackBar(content: Text('Errore nel recupero delle statistiche del personaggio\n'
+              'Controlla il tuo TAG e l\'API KEY')),
         );
       }
     } catch (e) {
-      print('Error during fetching player statistics: $e');
+      print('Errore nel recupero delle statistiche del personaggio: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred while fetching player statistics\n'
-            'Check your TAG or Api Key')),
+        SnackBar(content: Text('Errore nel recupero delle statistiche del personaggio\n'
+            'Controlla il tuo TAG e l\'API KEY')),
       );
-      throw Exception('An error occurred while fetching player statistics\n'
-          'Check your TAG or Api Key');
+      throw Exception('Errore nel recupero delle statistiche del personaggio\n'
+          'Controlla il tuo TAG e l\'API KEY');
     }
-    throw Exception('An error occurred while fetching player statistics\n'
-        'Check your TAG or Api Key');
+    throw Exception('Errore nel recupero delle statistiche del personaggio\n'
+        'Controlla il tuo TAG e l\'API KEY');
   }
 
   @override
@@ -116,10 +116,11 @@ class _HomePageState extends State<HomePage> {
     _playerStatistics = fetchPlayerStatistics(widget.playerTag);
   }
 
-  //Metodo di logout
+
   void logoutUser() {
     final authService = Provider.of<AuthService>(context, listen: false);
     authService.logoutUser();
+    // Altre operazioni di pulizia o reindirizzamento possono essere eseguite qui
   }
 
   void goToProfilePage() {
@@ -179,6 +180,7 @@ class _HomePageState extends State<HomePage> {
       MaterialPageRoute(
         builder: (context) => TagPage(),
       ),
+
     );
   }
 

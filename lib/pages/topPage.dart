@@ -34,14 +34,14 @@ class _TopPageState extends State<TopPage> {
         if (apiKeyEvent.snapshot.value != null) {
           return apiKeyEvent.snapshot.value.toString();
         } else {
-          throw Exception('API key not found in database');
+          throw Exception('Chiave Api non trovata nel database');
         }
       } else {
-        throw Exception('User not logged in');
+        throw Exception('L\'utente non ha eseguito l\'accesso');
       }
     } catch (e) {
-      print('Error getting API key from database: $e');
-      throw Exception('Error getting API key from database');
+      print('Errore dal recupero della chiave dal database: $e');
+      throw Exception('Errore dal recupero della chiave dal database');
     }
   }
 
@@ -64,12 +64,12 @@ class _TopPageState extends State<TopPage> {
           throw Exception('Invalid JSON data');
         }
       } else {
-        print('API request failed with status code: ${response.statusCode}');
-        throw Exception('Failed to load player statistics${response.statusCode}');
+        print('Richiesta API fallita: ${response.statusCode}');
+        throw Exception('Ricarica delle statistiche del giocatore fallita ${response.statusCode}');
       }
     } catch (e) {
-      print('Error during fetching top Italia data: $e');
-      throw Exception('An error occurred while fetching top Italia data: $e');
+      print('Errore durante il recupero della top italia: $e');
+      throw Exception('Errore durante il recupero della top italia: $e');
     }
   }
 
@@ -97,11 +97,11 @@ class _TopPageState extends State<TopPage> {
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Error: ${snapshot.error}'),
+              child: Text('Errore: ${snapshot.error}'),
             );
           } else if (!snapshot.hasData) {
             return Center(
-              child: Text('No data available'),
+              child: Text('Non ci sono dati disponibili'),
             );
           } else {
             final topData = snapshot.data as TopItalia;

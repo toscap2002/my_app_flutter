@@ -4,11 +4,12 @@ import 'package:my_app_flutter/components/listTile.dart';
 class MyDrawer extends StatelessWidget {
   final void Function()? onAbout;
   final void Function()? onProfile;
-  final void Function()? onLogout;
+ // final void Function()? onLogout;
   final void Function()? onTutorial;
   final void Function()? onApiKey;
   final void Function()? onTagPage;
-  const MyDrawer({super.key, required this.onAbout, required this.onProfile, required this.onLogout, required this.onTutorial, required this.onApiKey, required this.onTagPage});
+  final VoidCallback onLogout; // Definisci la variabile per la funzione di logout
+  const MyDrawer({super.key, required this.onAbout, required this.onProfile,     required this.onTutorial, required this.onApiKey, required this.onTagPage, required this.onLogout});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,10 @@ class MyDrawer extends StatelessWidget {
           //logout lista
           Padding(
             padding: const EdgeInsets.only(bottom: 25.0),
-            child: MyList(icon: Icons.logout, text: 'L O G O U T', onTap: onLogout,
+            child: MyList(icon: Icons.logout, text: 'L O G O U T', onTap: () {
+              Navigator.pop(context); // Chiudi il drawer
+              onLogout(); // Richiama la funzione di logout
+            },
             ),
           ),
         ],

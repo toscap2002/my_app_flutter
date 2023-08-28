@@ -75,5 +75,6 @@ class AuthService extends ChangeNotifier{
   //Uscire dall'account
     Future<void> logoutUser()  async{
       return await FirebaseAuth.instance.signOut();
+
     }
 }
