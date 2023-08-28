@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app_flutter/pages/authPage.dart';
 import 'package:my_app_flutter/pages/introPage.dart';
 
 import '../components/logo.dart';
@@ -79,7 +80,7 @@ class _TagPageState extends State<TagPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => IntroPage(), // Passa il valore corretto di playerTag
+            builder: (context) => AuthPage(), // Passa il valore corretto di playerTag
           ),
         );
       }).catchError((error) {

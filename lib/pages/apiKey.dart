@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app_flutter/components/logo.dart';
 import 'package:my_app_flutter/components/textfield.dart';
+import 'package:my_app_flutter/pages/authPage.dart';
 import 'package:my_app_flutter/pages/introPage.dart';
 
 import 'homePage.dart';
@@ -48,7 +49,7 @@ class _ApiKeyPageState extends State<ApiKeyPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => IntroPage(), // Passa il valore corretto di playerTag
+              builder: (context) => AuthPage(), // Passa il valore corretto di playerTag
             ),
           );
         } else {

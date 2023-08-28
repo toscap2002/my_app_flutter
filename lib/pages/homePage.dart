@@ -8,8 +8,6 @@ import 'package:my_app_flutter/components/rowInfo.dart';
 import 'package:my_app_flutter/model/player.dart';
 import 'package:my_app_flutter/pages/about.dart';
 import 'package:my_app_flutter/pages/apiKey.dart';
-import 'package:my_app_flutter/pages/loginOregistrati.dart';
-import 'package:my_app_flutter/pages/loginPage.dart';
 import 'package:my_app_flutter/pages/profilePage.dart';
 import 'package:my_app_flutter/pages/tagPage.dart';
 import 'package:my_app_flutter/pages/topPage.dart';
@@ -119,16 +117,11 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-  void logoutUser(BuildContext context) {
+  void logoutUser() {
     final authService = Provider.of<AuthService>(context, listen: false);
     authService.logoutUser();
-
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => LoginOrRegisterPage()),
-          (route) => false,
-    );
+    // Altre operazioni di pulizia o reindirizzamento possono essere eseguite qui
   }
-
 
   void goToProfilePage() {
     //pop menu drawer
@@ -203,9 +196,7 @@ class _HomePageState extends State<HomePage> {
       drawer: MyDrawer(
         onAbout: goToAboutPage,
         onProfile: goToProfilePage,
-        onLogout: () {
-          logoutUser(context); // Chiamare il metodo logoutUser con il contesto
-        },
+        onLogout: logoutUser,
         onTutorial: goToTutorialPage,
         onApiKey: goToApiKeyPage,
         onTagPage: goToTagPage,

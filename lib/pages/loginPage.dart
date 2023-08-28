@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app_flutter/components/button.dart';
 import 'package:my_app_flutter/components/logo.dart';
 import 'package:my_app_flutter/components/textfield.dart';
 import 'package:my_app_flutter/pages/authService.dart';
@@ -59,154 +60,135 @@ class _LoginPageState  extends State<LoginPage>{
             child: Center(
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 50),
-                      //logo
-                      Logo(),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 50),
+                        //logo
+                        Logo(),
 
 
-                      const SizedBox(height: 25),
+                        const SizedBox(height: 25),
 
-                      // //Bentornato
-                      // Text('Bentornato!',
-                      //   style: TextStyle(
-                      //       color: Colors.grey[50],
-                      //       fontSize: 16,
-                      //   ),
-                      // ),
+                        // //Bentornato
+                        // Text('Bentornato!',
+                        //   style: TextStyle(
+                        //       color: Colors.grey[50],
+                        //       fontSize: 16,
+                        //   ),
+                        // ),
 
-                      const SizedBox(height: 25),
+                        const SizedBox(height: 25),
 
-                      //email textfield
-                      MyTextField(
-                        controller: emailController,
-                        hintText: 'Email',
-                        obscureText: false,
-                      ),
-
-                      const SizedBox(height: 10),
-
-                      //password textflied
-                      MyTextField(
-                        controller: passwordController,
-                        hintText: 'Password',
-                        obscureText: true,
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      //Password dimenticata?
-                      Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                onTap: (){
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                        return ForgotPasswordPage();
-                                      }));
-                                },
-                                child: Text('Password dimenticata?',
-                                  style: TextStyle(color: Colors.purple),
-                                ),
-                              ),
-                            ],
-                          )
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      //Login
-                      ElevatedButton(
-                        onPressed: loginUser,
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.purple[400], // Colore di sfondo del pulsante
-                          onPrimary: Colors.white, // Colore del testo del pulsante
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8), // Bordo arrotondato
-                          ),
-                          padding: EdgeInsets.all(25),
-                          maximumSize: Size(200, 80),
+                        //email textfield
+                        MyTextField(
+                          controller: emailController,
+                          hintText: 'Email',
+                          obscureText: false,
                         ),
-                        child: Center(
-                          child: Text(
-                            'LOGIN',
-                            style:  TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
+
+                        const SizedBox(height: 10),
+
+                        //password textflied
+                        MyTextField(
+                          controller: passwordController,
+                          hintText: 'Password',
+                          obscureText: true,
+                        ),
+
+                        const SizedBox(height: 25),
+
+                        //Password dimenticata?
+                        Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return ForgotPasswordPage();
+                                        }));
+                                  },
+                                  child: Text('Password dimenticata?',
+                                    style: TextStyle(color: Colors.purple),
+                                  ),
+                                ),
+                              ],
+                            )
+                        ),
+
+                        const SizedBox(height: 25),
+
+                        //Login
+                        MyButton(
+                          text: "Login",
+                          onTap: loginUser,
+                        ),
+
+                        const SizedBox(height: 25),
+
+                        //non sei ancora registrato? registrati ora
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Non sei ancora registrato?',
+                              style: TextStyle(color: Colors.purple),
                             ),
-                          ),
+                            const SizedBox(width: 4),
+                            GestureDetector(
+                                onTap: widget.onTap,
+                                child: const Text(
+                                  'Registrati',
+                                  style: TextStyle(
+                                    color: Colors.indigo,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                            ),
+                          ],
                         ),
-                      ),
 
+                        const SizedBox(height: 25),
 
-                      const SizedBox(height: 25),
-
-                      //non sei ancora registrato? registrati ora
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Non sei ancora registrato?',
-                            style: TextStyle(color: Colors.purple),
+                        // //Tutorial
+                        // MyButton(
+                        //   text: "Tutorial",
+                        //   onTap:() {
+                        //     // Quando il pulsante viene premuto, apri la nuova pagina
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(builder: (context) => TutorialPage()),
+                        //     );
+                        //   },
+                        // ),
+                        ElevatedButton(
+                            onPressed: () {
+                              // Quando il pulsante viene premuto, apri la nuova pagina
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => TutorialPage()),
+                              );
+                            },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.pinkAccent[400], // Colore di sfondo del pulsante
+                            onPrimary: Colors.white, // Colore del testo del pulsante
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8), // Bordo arrotondato
+                            ),
+                            padding: const EdgeInsets.all(25),
                           ),
-                          SizedBox(width: 4),
-                          TextButton(
-                              onPressed: widget.onTap,
-                              child: const Text(
-                                'Registrati',
-                                style: TextStyle(
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      // //Tutorial
-                      // MyButton(
-                      //   text: "Tutorial",
-                      //   onTap:() {
-                      //     // Quando il pulsante viene premuto, apri la nuova pagina
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(builder: (context) => TutorialPage()),
-                      //     );
-                      //   },
-                      // ),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Quando il pulsante viene premuto, apri la nuova pagina
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => TutorialPage()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.pinkAccent[400], // Colore di sfondo del pulsante
-                          onPrimary: Colors.white, // Colore del testo del pulsante
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8), // Bordo arrotondato
-                          ),
-                          padding: const EdgeInsets.all(25),
+                            child: const Text(
+                              'Tutorial',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
                         ),
-                        child: const Text(
-                          'Tutorial',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ],
+                          ],
                   ),
                 )
 
