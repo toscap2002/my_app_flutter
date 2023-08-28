@@ -248,18 +248,18 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           //RowInfo(label: 'Name:', value: playerData.name),
-                          RowInfo(label: 'Role:', value: playerData.role),
-                          RowInfo(label: 'Tag:', value: playerData.tag),
-                          RowInfo(label: 'Best Trophies:', value: playerData.bestTrophies.toString()),
-                          RowInfo(label: 'Best Versus Trophies:', value: playerData.bestVersusTrophies.toString()),
-                          RowInfo(label: 'Builder Hall Level:', value: playerData.builderHallLevel.toString()),
-                          RowInfo(label: 'Donations:', value: playerData.donations.toString()),
-                          RowInfo(label: 'Donations Received:', value: playerData.donationsReceived.toString()),
-                          RowInfo(label: 'Exp Level:', value: playerData.expLevel.toString()),
-                          RowInfo(label: 'Town Hall Level:', value: playerData.townHallLevel.toString()),
-                          RowInfo(label: 'Trophies:', value: playerData.trophies.toString()),
-                          RowInfo(label: 'Versus Trophies:', value: playerData.versusTrophies.toString()),
-                          RowInfo(label: 'War Stars:', value: playerData.warStars.toString()),
+                          RowInfo(label: 'Role:', value: playerData.role ?? 'N/A'),
+                          RowInfo(label: 'Tag:', value: playerData.tag ?? 'N/A'),
+                          RowInfo(label: 'Best Trophies:', value: playerData.bestTrophies?.toString() ?? 'N/A'),
+                          RowInfo(label: 'Best Versus Trophies:', value: playerData.bestVersusTrophies?.toString() ?? 'N/A'),
+                          RowInfo(label: 'Builder Hall Level:', value: playerData.builderHallLevel?.toString() ?? 'N/A'),
+                          RowInfo(label: 'Donations:', value: playerData.donations?.toString() ?? 'N/A'),
+                          RowInfo(label: 'Donations Received:', value: playerData.donationsReceived?.toString() ?? 'N/A'),
+                          RowInfo(label: 'Exp Level:', value: playerData.expLevel?.toString() ?? 'N/A'),
+                          RowInfo(label: 'Town Hall Level:', value: playerData.townHallLevel?.toString() ?? 'N/A'),
+                          RowInfo(label: 'Trophies:', value: playerData.trophies?.toString() ?? 'N/A'),
+                          RowInfo(label: 'Versus Trophies:', value: playerData.versusTrophies?.toString() ?? 'N/A'),
+                          RowInfo(label: 'War Stars:', value: playerData.warStars?.toString() ?? 'N/A'),
                         ],
                       ),
                     ),
@@ -289,18 +289,19 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                           SizedBox(height: 10),
-                          RowInfo(label: 'Clan Name:', value: playerData.clan!.name),
-                          RowInfo(label: 'Clan Tag:', value: playerData.clan!.tag),
-                          RowInfo(label: 'Clan ClanLevel:', value: playerData.clan!.clanLevel.toString()),
+                          RowInfo(label: 'Clan Name:', value: playerData.clan?.name ?? 'N/A'),
+                          RowInfo(label: 'Clan Tag:', value: playerData.clan?.tag ?? 'N/A'),
+                          RowInfo(label: 'Clan ClanLevel:', value: playerData.clan?.clanLevel?.toString() ?? 'N/A'),
                           SizedBox(height: 10),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(width: 10), // Spazio tra l'etichetta e l'immagine
                               Center(
-                                child: Image.network(playerData.clan?.badgeUrls?.small ?? ''),
+                                child: playerData.clan?.badgeUrls?.small != null
+                                    ? Image.network(playerData.clan!.badgeUrls!.small)
+                                    : Text('No badge image available'),
                               ),
-
                             ],
                           ),
                           //RowInfo(label: 'Large:', value: playerData.clan!.badgeUrls!.large),
@@ -358,11 +359,12 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     //Text('Label Name:', style: TextStyle(fontWeight: FontWeight.bold)),
-                                    RowInfo(label: 'Name:', value: label.name),
+                                    RowInfo(label: 'Name:', value: label.name ?? 'N/A'),
                                     SizedBox(height: 10),
                                     Center(
-                                      child: Image.network(label.iconUrls.small ?? ''),
-                                    ),
+                                      child: label.iconUrls?.small != null
+                                          ? Image.network(label.iconUrls!.small)
+                                          : Text('No label icon available'),                                    ),
                                   ],
                                 ),
                               );
@@ -389,12 +391,13 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          RowInfo(label: 'LEAGUE NAME:', value: playerData.league!.name),
+                          RowInfo(label: 'LEAGUE NAME:', value: playerData.league?.name ?? 'N/A'),
 
                           SizedBox(width: 10), // Spazio tra l'etichetta e l'immagine
                           Center(
-                            child: Image.network(playerData.league?.iconUrls?.small ?? ''),
-                          ),
+                            child: playerData.league?.iconUrls?.small != null
+                                ? Image.network(playerData.league!.iconUrls!.small)
+                                : Text('No league icon available'),                          ),
                         ],
                       ),
                       // Text('League IconUrlsx:', style: TextStyle(fontWeight: FontWeight.bold)),
