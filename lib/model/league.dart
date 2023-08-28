@@ -16,7 +16,7 @@ class League {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data =  {
-      'iconUrls': iconUrls.toJson(),
+      'iconUrls': iconUrls != null ? iconUrls.toJson() : null,
       'id': id,
       'name': name,
     };

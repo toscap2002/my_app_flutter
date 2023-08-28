@@ -60,7 +60,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     // Qui puoi personalizzare la tua pagina di chat in base all'utente selezionato
     return Scaffold(
-      backgroundColor: Colors.grey.shade600,
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor: Colors.pinkAccent,
         title: Text('Chat con ${widget.name}'), // Mostra l'ID dell'utente nella barra dell'app

@@ -27,7 +27,7 @@ class _IntroPageState extends State<IntroPage>{
 
   //le pagine da mostrare
   final List<Widget> _pages = [
-    //la pgina di home
+    //la pgina di home dove visualizzi le tue statistiche
     HomePage(playerTag: '',),
 
     //pagina per ricercare gli atlri utenti
