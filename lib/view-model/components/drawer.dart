@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_app_flutter/components/listTile.dart';
+import 'package:my_app_flutter/view-model/components/listTile.dart';
 
 class MyDrawer extends StatelessWidget {
   final void Function()? onAbout;

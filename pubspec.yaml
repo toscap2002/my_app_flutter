@@ -85,6 +85,7 @@ flutter:
     - lib/images/clashapilogin.png
     - lib/images/imageviewapp.jpeg
     - lib/images/taglocation.jpeg
+    - lib/images/clashtitolo.jpg
     - lib/video/videotutorialapiclash.mp4
 
   # An image asset can refer to one or more resolution-specific "variants", see

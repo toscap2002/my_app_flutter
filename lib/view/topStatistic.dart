@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app_flutter/pages/chatPage.dart';
-import 'package:my_app_flutter/pages/profilePage.dart';
-import 'package:my_app_flutter/pages/searchPage.dart';
+import 'package:my_app_flutter/view/chatPage.dart';
+import 'package:my_app_flutter/view/profilePage.dart';
+import 'package:my_app_flutter/view/searchPage.dart';
 import 'package:http/http.dart' as http;
 
-import '../components/rowInfo.dart';
+import 'package:my_app_flutter/view-model/components/rowInfo.dart';
 import '../model/player.dart';
 
 class TopStatistics extends StatefulWidget {

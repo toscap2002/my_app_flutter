@@ -1,8 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app_flutter/pages/topPage.dart';
-import 'package:my_app_flutter/pages/homePage.dart';
-import 'package:my_app_flutter/pages/searchPage.dart';
+import 'package:my_app_flutter/view/topPage.dart';
+import 'package:my_app_flutter/view/homePage.dart';
+import 'package:my_app_flutter/view/searchPage.dart';
 
 
 class IntroPage extends StatefulWidget{

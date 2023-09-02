@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app_flutter/components/logo.dart';
-import 'package:my_app_flutter/components/textfield.dart';
-import 'package:my_app_flutter/pages/authPage.dart';
-import 'package:my_app_flutter/pages/introPage.dart';
+import 'package:my_app_flutter/view-model/components/logo.dart';
+import 'package:my_app_flutter/view-model/components/textfield.dart';
+import 'package:my_app_flutter/view-model/authPage.dart';
+import 'package:my_app_flutter/view-model/introPage.dart';
 
 import 'homePage.dart';
 

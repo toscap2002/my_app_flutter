@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app_flutter/pages/chatPage.dart';
-import 'package:my_app_flutter/pages/playerStatistics.dart';
-import '../components/textfield.dart';
+import 'package:my_app_flutter/view/chatPage.dart';
+import 'package:my_app_flutter/view/playerStatistics.dart';
+import 'package:my_app_flutter/view-model/components/textfield.dart';
 import 'homePage.dart';
-import 'introPage.dart';
+import '../view-model/introPage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart'; // Importa il pacchetto
 

@@ -5,7 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_app_flutter/model/topItalia.dart';
-import 'package:my_app_flutter/pages/topStatistic.dart';
+import 'package:my_app_flutter/view/topStatistic.dart';
 
 class TopPage extends StatefulWidget {
   @override

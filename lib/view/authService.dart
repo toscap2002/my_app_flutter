@@ -7,9 +7,6 @@ class AuthService extends ChangeNotifier{
   //istanza di autenticazione
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  //istanza di firestore
-  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
-
   //istanza di realtime database
   final FirebaseDatabase _database = FirebaseDatabase.instance;
 
@@ -21,15 +18,6 @@ class AuthService extends ChangeNotifier{
           email: email,
           password: password,
       );
-
-      //aggiungere un documento per l'utente nella collezione 'user' se non esiste già
-      // _fireStore.collection('user').doc(userCredential.user!.uid).set({
-      //   'uid' : userCredential.user!.uid,
-      //   'email' : email,
-      // }, SetOptions(merge: true));
-
-
-
       return userCredential;
     } on FirebaseException catch (e){
       throw Exception(e.code);
@@ -57,15 +45,6 @@ class AuthService extends ChangeNotifier{
           'apiKey' : apiKey,
         });
       }
-
-      //dopo aver creato un utente,
-      //creiamo un documento per l'utente nella collezione degli utenti
-      // _fireStore.collection('user').doc(userCredential.user!.uid).set({
-      //   'uid' : userCredential.user!.uid,
-      //   'email' : email,
-      //   'name' : name,
-      // });
-
       return userCredential;
     } on FirebaseAuthException catch (e){
       throw Exception(e.code);

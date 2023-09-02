@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-import 'package:my_app_flutter/pages/searchPage.dart';
+import 'package:my_app_flutter/view/searchPage.dart';
 
 class ChatPage extends StatefulWidget {
   final String userId;// L'ID dell'utente destinatario

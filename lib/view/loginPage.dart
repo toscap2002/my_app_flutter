@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app_flutter/components/button.dart';
-import 'package:my_app_flutter/components/logo.dart';
-import 'package:my_app_flutter/components/textfield.dart';
-import 'package:my_app_flutter/pages/authService.dart';
-import 'package:my_app_flutter/pages/forgotPassword.dart';
-import 'package:my_app_flutter/pages/tutorialPage.dart';
+import 'package:my_app_flutter/view-model/components/button.dart';
+import 'package:my_app_flutter/view-model/components/logo.dart';
+import 'package:my_app_flutter/view-model/components/textfield.dart';
+import 'package:my_app_flutter/view/authService.dart';
+import 'package:my_app_flutter/view/forgotPassword.dart';
+import 'package:my_app_flutter/view/tutorialPage.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {

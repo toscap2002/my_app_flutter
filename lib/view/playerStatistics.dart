@@ -3,28 +3,27 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_app_flutter/components/drawer.dart';
-import 'package:my_app_flutter/components/rowInfo.dart';
-import 'package:my_app_flutter/model/player.dart';
-import 'package:my_app_flutter/pages/about.dart';
-import 'package:my_app_flutter/pages/apiKey.dart';
-import 'package:my_app_flutter/pages/profilePage.dart';
-import 'package:my_app_flutter/pages/tagPage.dart';
-import 'package:my_app_flutter/pages/topPage.dart';
-import 'package:my_app_flutter/pages/tutorialPage.dart';
-import 'package:provider/provider.dart';
-import 'package:my_app_flutter/pages/authService.dart';
+import 'package:my_app_flutter/view/chatPage.dart';
+import 'package:my_app_flutter/view/profilePage.dart';
+import 'package:my_app_flutter/view/searchPage.dart';
 import 'package:http/http.dart' as http;
 
-class HomePage extends StatefulWidget {
-  final String playerTag;
-  HomePage({required this.playerTag, Key? key}) : super(key: key);
+import 'package:my_app_flutter/view-model/components/rowInfo.dart';
+import '../model/player.dart';
+
+class PlayerStatistics extends StatefulWidget {
+  final String userID;// L'ID dell'utente
+  final String namePS;
+  final String userTag;
+
+  PlayerStatistics({super.key, required this.userID, required this.namePS, required this.userTag});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<PlayerStatistics> createState() => _PlayerStatisticsState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _PlayerStatisticsState extends State<PlayerStatistics> {
+
   late Future<Player> _playerStatistics;
 
   Future<Player> fetchPlayerStatistics(String playerTag) async {
@@ -32,27 +31,11 @@ class _HomePageState extends State<HomePage> {
       var user = FirebaseAuth.instance.currentUser;
 
       final firstUrl = 'https://api.clashofclans.com/v1/players/';
-      var rawTag = "";
 
       if (user != null) {
         DatabaseReference databaseReference =
         FirebaseDatabase.instance.reference();
         String uid = user.uid;
-
-        // Utilizza il metodo once() per ottenere un DatabaseEvent
-        DatabaseEvent tagEvent = await databaseReference
-            .child('user')
-            .child(uid)
-            .child('tag')
-            .once();
-
-        if (tagEvent.snapshot.value != null) {
-          rawTag = tagEvent.snapshot.value.toString();
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('E\' andato storto qualcosa nel recupero del TAG')),
-          );
-        }
 
         // Allo stesso modo, ottieni il DatabaseEvent per apiKey
         DatabaseEvent apiKeyEvent = await databaseReference
@@ -62,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             .once();
 
         if (apiKeyEvent.snapshot.value != null) {
-          String finalTag = rawTag.replaceAll("#", "%23");
+          String finalTag = playerTag.replaceAll("#", "%23");
           var apiKey = apiKeyEvent.snapshot.value.toString();
 
           final finalUri = firstUrl + finalTag;
@@ -79,127 +62,56 @@ class _HomePageState extends State<HomePage> {
               print(player.toJson());
               return player;
             } else {
-              throw Exception('JSON data invalido');
+              throw Exception('Invalid JSON data');
             }
           } else {
-            print('Richiesta API fallita: ${response.statusCode}');
+            print('API request failed with status code: ${response.statusCode}');
             throw Exception('Failed to load player statistics${response.statusCode}');
           }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Errore nel recupero delle statistiche del personaggio\n'
-                'Controlla il tuo TAG e l\'API KEY')),
+            SnackBar(content: Text('An error occurred while fetching player statistics\n'
+                'Check your Api Key.\n'
+                'If the error persist it must be the Player\'TAG')),
           );
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Errore nel recupero delle statistiche del personaggio\n'
-              'Controlla il tuo TAG e l\'API KEY')),
+          SnackBar(content: Text('An error occurred while fetching player statistics\n'
+              'Check your Api Key.\n'
+              'If the error persist it must be the Player\'TAG')),
         );
       }
     } catch (e) {
-      print('Errore nel recupero delle statistiche del personaggio: $e');
+      print('Error during fetching player statistics: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Errore nel recupero delle statistiche del personaggio\n'
-            'Controlla il tuo TAG e l\'API KEY')),
+        SnackBar(content: Text('An error occurred while fetching player statistics\n'
+            'Check your Api Key.\n'
+            'If the error persist it must be the Player\'TAG')),
       );
-      throw Exception('Errore nel recupero delle statistiche del personaggio\n'
-          'Controlla il tuo TAG e l\'API KEY');
+      throw Exception('An error occurred while fetching player statistics\n'
+          'Check your Api Key.\n'
+          'If the error persist it must be the Player\'TAG');
     }
-    throw Exception('Errore nel recupero delle statistiche del personaggio\n'
-        'Controlla il tuo TAG e l\'API KEY');
+    throw Exception('An error occurred while fetching player statistics\n'
+        'Check your Api Key.\n'
+        'If the error persist it must be the Player\'TAG');
   }
 
   @override
   void initState() {
     super.initState();
-    _playerStatistics = fetchPlayerStatistics(widget.playerTag);
+    _playerStatistics = fetchPlayerStatistics(widget.userTag);
   }
-
-
-  void logoutUser() {
-    final authService = Provider.of<AuthService>(context, listen: false);
-    authService.logoutUser();
-    // Altre operazioni di pulizia o reindirizzamento possono essere eseguite qui
-  }
-
-  void goToProfilePage() {
-    //pop menu drawer
-    Navigator.pop(context);
-    //go to profile page
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ProfilePage(),
-      ),
-    );
-  }
-
-  void goToAboutPage() {
-    //pop menu drawer
-    Navigator.pop(context);
-    //go to about page
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AboutPage(),
-      ),
-    );
-  }
-
-  void goToTutorialPage() {
-    //pop menu drawer
-    Navigator.pop(context);
-    //go to about page
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TutorialPage(),
-      ),
-    );
-  }
-
-  void goToApiKeyPage() {
-    //pop menu drawer
-    Navigator.pop(context);
-    //go to about page
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ApiKeyPage(),
-      ),
-    );
-  }
-
-  void goToTagPage() {
-    //pop menu drawer
-    Navigator.pop(context);
-    //go to about page
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TagPage(),
-      ),
-
-    );
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Statistiche di ${widget.namePS}'),
         centerTitle: true,
         backgroundColor: Colors.pinkAccent,
-      ),
-      drawer: MyDrawer(
-        onAbout: goToAboutPage,
-        onProfile: goToProfilePage,
-        onLogout: logoutUser,
-        onTutorial: goToTutorialPage,
-        onApiKey: goToApiKeyPage,
-        onTagPage: goToTagPage,
       ),
       body: FutureBuilder<Player>(
         future: _playerStatistics,
@@ -421,7 +333,18 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatPage(userId: widget.userID, name: widget.namePS), // Passa l'ID dell'utente
+            ),
+          );
+        },
+        child: Icon(Icons.message),
+
+      ),
     );
   }
 }
-
