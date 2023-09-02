@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app_flutter/view-model/components/button.dart';
 import 'package:my_app_flutter/view-model/components/logo.dart';
 import 'package:my_app_flutter/view-model/components/textfield.dart';
-import 'package:my_app_flutter/view/authService.dart';
+import 'package:my_app_flutter/view-model/authService.dart';
 import 'package:my_app_flutter/view/tutorialPage.dart';
 import 'package:provider/provider.dart';
 
@@ -33,10 +33,34 @@ class _RegisterPageState  extends State<RegisterPage> {
       );
     },
     );
+
+    // Controlla se email, nome e password non sono vuoti
+    if (emailController.text.isEmpty ||
+        nameController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty) {
+      // Pop il cerchio di caricamento
+      Navigator.pop(context);
+
+      // Mostra un messaggio di errore
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Tutti i campi devono essere compilati"
+              "\nIl Nick può essere inserito successivamente"),
+        ),
+      );
+      return;
+    }
+
     //controllare se la password è confermata
     if (passwordController.text != confirmPasswordController.text) {
+      // Pop il cerchio di caricamento
+      Navigator.pop(context);
+
+      // Mostra un messaggio di errore
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Password sbagliata"),
+        SnackBar(
+          content: Text("Password Errata"),
         ),
       );
       return;

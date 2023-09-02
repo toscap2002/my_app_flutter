@@ -27,14 +27,14 @@ class _TutorialPageState extends State<TutorialPage> {
     description: "Questa è la descrizione sintetica dell'App...\n" +
         "\nLa versione completa può essere trovata nella tesina in formato .pdf." +
         "\nDurante la creazione del proprio profilo bisogna inserire le corrette credenziali:" +
-        "\n--> Il Tag [combinazione alfanumerica preceduta da <<#>>] può essere trovato " +
+        "\n\n--> Il Tag [combinazione alfanumerica preceduta da <<#>>] può essere trovato " +
         "all'interno del prorpio profilo una volta avviato il gioco " +
         "<<Clash of Clans>> sotto il proprio nickname " +
         "(La prima immagine sottostante mostra dove si trova)." +
         "\n--> Il proprio nome" +
         "\n--> Un'email valida" +
         "\n--> Una Password" +
-        "\nA seguito della creazione del profilo ed eseguito l'accesso bisogna inserire" +
+        "\n\nA seguito della creazione del profilo ed eseguito l'accesso bisogna inserire" +
         "una chiave necessaria ad usare le API di <<Clash of Clans>>." +
         "\nPer far questo bisgna conoscere il proprio indirizzo IP " +
         "(consultabile al primo link evidenziato)." +
@@ -42,9 +42,9 @@ class _TutorialPageState extends State<TutorialPage> {
         "il secondo link evidenziato in blu " +
         "(La seconda immagina mostra la schermata del sito) " +
         "fornendo le seguenti credenziali:" +
-        "\nEmail: ciao@gmail.com" +
-        "\nPassword: voleviEhh" +
-        "\nEntrati nel sito bisogna generare una chiave fornendo il proprio indirizzo IP " +
+        "\n\nEmail: xeros35867@jwsuns.com" +
+        "\n\nPassword: Pr0g_M0b1l3" +
+        "\n\nEntrati nel sito bisogna generare una chiave fornendo il proprio indirizzo IP " +
         "(come mostrato nel video guida)." +
         "\nGenerata la chiave bisogna copia/incollarla all'interno della schermata " +
         "apposita, chiamata <<Api Key>>, e presente nell'hamburger menu " +
@@ -79,22 +79,46 @@ class _TutorialPageState extends State<TutorialPage> {
               tutorial.description,
               style: TextStyle(fontSize: 16),
             ),
-            GestureDetector(
-              onTap: () => _launchURL(tutorial.linkUrl1),
-              child: Row(
-                children: [
-                  Icon(Icons.link),
-                  Text(tutorial.linkText1),
-                ],
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => _launchURL(tutorial.linkUrl1),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.link, color: Colors.blue),
+                      Text(
+                        tutorial.linkText1,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-            GestureDetector(
-              onTap: () => _launchURL(tutorial.linkUrl2),
-              child: Row(
-                children: [
-                  Icon(Icons.link),
-                  Text(tutorial.linkText2),
-                ],
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => _launchURL(tutorial.linkUrl2),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.link, color: Colors.blue),
+                      Text(
+                        tutorial.linkText2,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Image.asset('lib/images/taglocation.jpeg'),
@@ -103,12 +127,12 @@ class _TutorialPageState extends State<TutorialPage> {
 
 
             SizedBox(height: 16),
-         _controller.value.isInitialized
-            ? AspectRatio(
-             aspectRatio: _controller.value.aspectRatio,
-             child: VideoPlayer(_controller),
-        )
-            : CircularProgressIndicator(),
+            _controller.value.isInitialized
+                ? AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: VideoPlayer(_controller),
+            )
+                : CircularProgressIndicator(),
 
             TextButton(
               onPressed: () {
@@ -121,8 +145,8 @@ class _TutorialPageState extends State<TutorialPage> {
                 });
               },
               child: Icon(
-            _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-            ),
+                _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+              ),
 
             )],
         ),

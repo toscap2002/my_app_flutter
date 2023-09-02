@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app_flutter/view-model/components/button.dart';
 import 'package:my_app_flutter/view-model/components/logo.dart';
 import 'package:my_app_flutter/view-model/components/textfield.dart';
-import 'package:my_app_flutter/view/authService.dart';
+import 'package:my_app_flutter/view-model/authService.dart';
 import 'package:my_app_flutter/view/forgotPassword.dart';
 import 'package:my_app_flutter/view/tutorialPage.dart';
 import 'package:provider/provider.dart';
@@ -103,15 +103,18 @@ class _LoginPageState  extends State<LoginPage>{
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                GestureDetector(
-                                  onTap: (){
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return ForgotPasswordPage();
-                                        }));
-                                  },
-                                  child: Text('Password dimenticata?',
-                                    style: TextStyle(color: Colors.purple),
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click, // Cursore a forma di mano
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // Azione da eseguire quando si fa clic sul testo "Password dimenticata"
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                        return ForgotPasswordPage();
+                                      }));
+                                    },
+                                    child: Text('Password dimenticata?',
+                                      style: TextStyle(color: Colors.purple),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -137,15 +140,18 @@ class _LoginPageState  extends State<LoginPage>{
                               style: TextStyle(color: Colors.purple),
                             ),
                             const SizedBox(width: 4),
-                            GestureDetector(
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click, // Cursore a forma di mano
+                              child: GestureDetector(
                                 onTap: widget.onTap,
-                                child: const Text(
+                                child: Text(
                                   'Registrati',
                                   style: TextStyle(
                                     color: Colors.indigo,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                )
+                                ),
+                              ),
                             ),
                           ],
                         ),

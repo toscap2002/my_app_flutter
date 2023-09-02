@@ -13,7 +13,7 @@ import 'package:my_app_flutter/view/tagPage.dart';
 import 'package:my_app_flutter/view/topPage.dart';
 import 'package:my_app_flutter/view/tutorialPage.dart';
 import 'package:provider/provider.dart';
-import 'package:my_app_flutter/view/authService.dart';
+import 'package:my_app_flutter/view-model/authService.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {

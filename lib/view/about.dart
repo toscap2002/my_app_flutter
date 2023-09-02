@@ -33,7 +33,7 @@ class _AboutPageState extends State<AboutPage> {
             ),
             SizedBox(height: 25), // Spazio tra l'immagine e il testo
             Text(
-              'Progetto di Programmazione Mobile fatto da: \nGabriel Piercecchi \nTosca Pierro \nLorenzo Zulli \nGrazie alle APIs di Clash of Clans', // Inserisci il testo desiderato qui
+              'Progetto di Programmazione Mobile fatto da: \nGabriel Piercecchi \nTosca Pierro \nLorenzo Zulli',
               style: TextStyle(
                 fontSize: 20, // Imposta la dimensione del testo
               ),
