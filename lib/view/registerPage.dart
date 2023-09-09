@@ -178,7 +178,9 @@ class _RegisterPageState  extends State<RegisterPage> {
                               style: TextStyle(color: Colors.purple),
                             ),
                             const SizedBox(width: 4),
-                            GestureDetector(
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click, // Imposta il cursore su "mano"
+                              child: GestureDetector(
                                 onTap: widget.onTap,
                                 child: const Text(
                                   'Fai il login',
@@ -186,7 +188,8 @@ class _RegisterPageState  extends State<RegisterPage> {
                                     color: Colors.indigo,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                )
+                                ),
+                              ),
                             ),
                           ],
                         ),
